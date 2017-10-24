@@ -47,5 +47,9 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "handlebars": "^4.0.11",
+    "request-promise": "^4.2.2",
+    "xr": "^0.3.0"
+  }
 }
