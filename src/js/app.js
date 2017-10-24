@@ -3,7 +3,7 @@ import xr from 'xr'
 
 import mainTemplate from '../templates/main.html'
 import groupsAllTemplate from '../templates/groupsAllTemplate.html'
-import groupTemplate from '../templates/groupTemplate.html'
+import teamTemplate from '../templates/teamTemplate.html'
 
 import {groupBy, sortByKeys, shuffle } from './libs/arrayUtils'
 
@@ -67,7 +67,7 @@ function compileHTML(newObj){
     });
 
     Handlebars.registerPartial({
-        'group': groupTemplate
+        'team': teamTemplate
     });
 
     var content = Handlebars.compile(
@@ -76,7 +76,7 @@ function compileHTML(newObj){
         }
     );
 	console.log(dataIn)
-	
+
     var newHTML = content(dataIn);
 
     return newHTML
@@ -90,7 +90,7 @@ function formatData(data){
 	data.sheets.testTeams.map((team) => {
 		team.teamName = team.Team;
 		team.drawPot = team["Draw pot"];
-		team.fifaRank = team["november-rank"];
+		team.fifaRank = team["october-rank"];
 		teams.push(team);
 	})
 
