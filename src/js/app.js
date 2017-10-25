@@ -5,42 +5,58 @@ import mainTemplate from '../templates/main.html'
 import groupsAllTemplate from '../templates/groupsAllTemplate.html'
 import teamTemplate from '../templates/teamTemplate.html'
 
-import {groupBy, sortByKeys, shuffle } from './libs/arrayUtils'
+import {groupBy, sortByKeys, shuffle, compareValues } from './libs/arrayUtils'
 
 const dataurl = "https://interactive.guim.co.uk/docsdata-test/1mINILM6lN7p0soJ2eHKEd08bW-0Hw3bpf3nhfng2jrA.json";
 
 var groupsOriginal = [
 	{
 		"group": "A",
-		"teams": [{"name":"Russia", "no": 0, "pot": 0},"","",""]
+		"teams": ["","","",""],
+		"strengthScore": 0,
+		"strengthRating" : "weak"
 	},
 	{
 		"group": "B",
-		"teams": ["","","",""]
+		"teams": ["","","",""],
+		"strengthScore": 0,
+		"strengthRating" : "weak"
 	},
 	{
 		"group": "C",
-		"teams": ["","","",""]
+		"teams": ["","","",""],
+		"strengthScore": 0,
+		"strengthRating" : "weak"
 	},
 	{
 		"group": "D",
-		"teams": ["","","",""]
+		"teams": ["","","",""],
+		"strengthScore": 0,
+		"strengthRating" : "weak"
 	},
 	{
 		"group": "E",
-		"teams": ["","","",""]
+		"teams": ["","","",""],
+		"strengthScore": 0,
+		"strengthRating" : "weak"
 	},
 	{
 		"group": "F",
-		"teams": ["","","",""]
+		"teams": ["","","",""],
+		"strengthScore": 0,
+		"strengthRating" : "weak"
 	},
 	{
 		"group": "G",
-		"teams": ["","","",""]
+		"teams": ["","","",""],
+		"strengthScore": 0,
+		"strengthRating" : "weak"
 	},
 	{
 		"group": "H",
-		"teams": ["","","",""]
+		"teams": ["","","",""],
+		"strengthScore": 0,
+		"strengthRating" : "weak"
 	}
 ];
 
@@ -52,7 +68,14 @@ function init(){
 		let newObj = formatData(resp.data);
 		let compiledHTML = compileHTML(newObj);
 
-		document.querySelector(".gv-interactive-container").innerHTML = compiledHTML;
+		document.querySelector(".gv-wrapper").innerHTML = compiledHTML;
+
+		let h = document.querySelector(".gv-wrapper").offsetHeight;
+
+
+		//fire this function after compiling html to size iframe correctly
+		window.resize();
+		
 	})	
 }
     
@@ -75,11 +98,12 @@ function compileHTML(newObj){
             compat: true
         }
     );
-	console.log(dataIn)
+
 
     var newHTML = content(dataIn);
 
-    return newHTML
+    return newHTML;
+
 }
 
 
@@ -109,10 +133,26 @@ function formatData(data){
 function makeDraw(pots){
 	let drawCount = groupsOriginal.length;
 
-	pots.map((pot,k) => {
-		pot.shuffleArr = shuffle(pot.objArr);
-		populateGroups(pot.shuffleArr)
-	})
+		pots.map((pot,k) => {
+			pot.shuffleArr = shuffle(pot.objArr);
+			if (pot.sortOn == 1){ pot.shuffleArr = (changeFirstObj(pot.shuffleArr, e => e.Team === 'Russia') )};
+
+			populateGroups(pot.shuffleArr);
+		})
+
+
+
+	groupsOriginal.sort(compareValues('strengthScore')); 
+
+	groupsOriginal.map((o,k) => {
+		if(k == 0){ o.strengthRating = "strongest"}
+		if(k > 0 && k < 3){ o.strengthRating = "strong"}
+		if(k > 2 && k < 5){ o.strengthRating = "balanced"}
+		if(k > 4 && k < 7){ o.strengthRating = "weak"}
+		if(k > 6){ o.strengthRating = "weakest"}
+	});
+
+	groupsOriginal.sort(compareValues('group'));
 
 	return groupsOriginal;
 	
@@ -120,8 +160,24 @@ function makeDraw(pots){
 
 function populateGroups(a){
 	a.map((team,k) => {	
+		if(k == 0){ groupsOriginal[k].firstGroup = true }
 		groupsOriginal[k].teams[team.drawPot-1] = team;
+		groupsOriginal[k].strengthScore += Number(team.fifaRank);
 	})	
+}
+
+
+
+
+
+function changeFirstObj(a, fn) {
+  var non_matches = [];
+  var matches = a.filter(function(e, i, a) {
+    var match = fn(e, i, a);
+    if (!match) non_matches.push(e);
+    return match;
+  });
+  return matches.concat(non_matches);
 }
 
 

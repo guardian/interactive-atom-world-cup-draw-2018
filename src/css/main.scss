@@ -2,12 +2,168 @@
 @import "fonts";
 
 // Uncomment for embeds
-//@import "embed";
+@import "embed";
 
 // Uncomment for full screen (including immersive article main media)
 //@import "fullscreen";
+
+$strongest: #c45185;
+$strong: #eabfd2;
+$balanced: #EFEFEF;
+$weak: #bce0f3;
+$weakest: #4696ca;
+
+$button: #b72166;
 
 .element-atom,
 .interactive-atom {
     margin: 0 !important;
 }
+
+.gv-wrapper{
+	height:100%;
+	margin-bottom: 48px;
+	.right-align{
+		margin-top: 3px;
+		text-align:right;
+		float:right;
+	}
+
+	.left-align{
+		text-align:left;
+	}
+}
+
+.gv-table-wrapper{
+	height:auto;
+}
+
+.gv-group-table{
+	display:block;
+	width: 100%;
+	float: none;
+	min-height:72px;
+    margin: 0;
+    padding: 12px;
+    &.strongest{
+		background-color: $strongest;
+	}
+	&.strong{
+		background-color: $strong;
+	}
+	&.balanced{
+		background-color: $balanced;
+	}
+	&.weak{
+		background-color: $weak;
+	}
+	&.weakest{
+		background-color: $weakest;
+	}
+	@include mq(mobileLandscape){
+		width: calc(25% - 24px);
+		float: left;
+	}
+
+	@include mq(tablet){
+		    width: calc(25% - 24px);
+    		
+	}
+}
+
+.gv-caption{
+	font-family:"Guardian Text Sans Web", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	margin-top: 3px;
+}
+
+.gv-table-col-head{
+	position: absolute;
+    right: 12px;
+	font-family:"Guardian Text Sans Web", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	font-weight:900;
+	margin-top: 3px;
+	color:#fff;
+	&.balanced, &.weak{
+		color:#767676;
+	}
+
+	@include mq(mobileLandscape){
+		position:relative;
+		left:0;
+	}
+}
+.gv-team-row{
+	display:inline-block;
+	width:auto;
+	border: none;
+	margin:0;
+	padding:0 6px 0 0;
+	float: left;
+
+	@include mq(mobileLandscape){
+		width:100%;
+		display:block;
+		border-bottom: 1px dotted #CCC;
+		padding: 0;
+
+	}
+	&.header{
+		border:none;
+		margin-bottom:6px;
+		h4{
+			margin: 0;
+			width:auto;
+			float: left;
+			font-size:21px;
+		}
+	}
+
+}
+.gv-row-txt{
+	font-family: "Guardian Egyptian Web",Georgia,serif;
+	font-size: 16px;
+	width: auto;
+	margin:0;
+	padding:0;
+}
+
+
+
+.gv-start-button{
+	width: 180px;
+	height:36px;
+	padding-top:12px;
+	margin: 12px 0 24px;
+	border-radius:1000px;
+	background-color: $button;
+
+	text-align:center;
+	font-size: 20px;
+	color:#FFF;
+	margin-left: calc(50% - 90px);
+
+	cursor:pointer;
+}
+
+
+
+
+.display-mobile{
+	display:inline-block;
+	@include mq(mobileLandscape){
+		display:none;
+	}
+}
+
+
+.display-none-mobile{
+	display:none;
+	@include mq(mobileLandscape){
+		display:inline-block;
+	}
+}
+
+
+

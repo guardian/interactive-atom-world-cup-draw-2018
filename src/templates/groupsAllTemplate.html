@@ -1,12 +1,16 @@
+<div class="gv-table-wrapper ">
+
 {{#each drawArr}}
-<div>Group {{group}}</div>
-
-<div>{{>team}}</div>
-	
-
+	<div class="gv-group-table {{strengthRating}}" data-strength="{{strengthRating}}" data-strength-score="{{strengthScore}}">
+		<div class="gv-team-row header"><span class="gv-table-col-head {{strengthRating}}">{{strengthRating}}</span></div>
+		<div class="gv-team-row header" style="margin-bottom: 0;"><h4>Group {{group}}</h4>{{#if firstGroup}}<span class="gv-caption right-align display-none-mobile">fifa ranking</span>{{/if}}</div>
 
 
+		{{>team}}
+	</div>
 {{/each}}
+
+</div>
 
 
 

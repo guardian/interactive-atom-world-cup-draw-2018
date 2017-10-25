@@ -1,5 +1,7 @@
-{{#each teams}}​    	
-      	  <div class="row" data-team="{{teamName}}" data-rank="{{fifaRank}}">
-            {{teamName}} – {{fifaRank}}
+{{#each teams}}​ 	
+      	  <div class="gv-team-row" data-team="{{teamName}}" data-rank="{{fifaRank}}">
+            <span class="gv-row-txt left-align">{{teamName}}</span>
+            <span class="gv-row-txt left-align display-mobile">({{fifaRank}})</span>
+            <span class="gv-row-txt right-align display-none-mobile">{{fifaRank}}</span>
           </div>
  {{/each}}
