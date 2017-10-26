@@ -3,6 +3,7 @@
 
 // Uncomment for embeds
 @import "embed";
+@import "potStyles";
 
 // Uncomment for full screen (including immersive article main media)
 //@import "fullscreen";
@@ -12,21 +13,36 @@ $strong: #eabfd2;
 $balanced: #EFEFEF;
 $weak: #bce0f3;
 $weakest: #4696ca;
-
+$neutral: #e8e8e8;
 $button: #b72166;
 
 .element-atom,
 .interactive-atom {
     margin: 0 !important;
+
+}
+
+body{
+	background-color:#FFF;
 }
 
 .gv-wrapper{
 	height:100%;
 	margin-bottom: 48px;
+
 	.right-align{
 		margin-top: 3px;
 		text-align:right;
 		float:right;
+		@include mq(embedFiveEighty){
+			text-align: left;
+			width:30px;
+		}
+
+		@include mq(embedSevenEighty){
+			text-align: right;
+			width:auto;
+		}
 	}
 
 	.left-align{
@@ -34,48 +50,122 @@ $button: #b72166;
 	}
 }
 
+.gv-pot-div{
+	margin-bottom:12px;
+}
+
+
 .gv-table-wrapper{
 	height:auto;
 }
 
 .gv-group-table{
+	position: relative;
 	display:block;
 	width: 100%;
 	float: none;
 	min-height:72px;
     margin: 0;
     padding: 12px;
+    background-color: $neutral;
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease;
+   
     &.strongest{
-		background-color: $strongest;
+    	transition-delay:2s; 
+		background-color:  $strongest; 
 	}
 	&.strong{
-		background-color: $strong;
+		transition-delay:1.5s; 
+	    background-color: $strong; 
+	   
 	}
 	&.balanced{
+		transition-delay:1s; 
 		background-color: $balanced;
 	}
 	&.weak{
+		transition-delay:0.5s; 
 		background-color: $weak;
 	}
 	&.weakest{
+		transition-delay:0s; 
 		background-color: $weakest;
 	}
-	@include mq(mobileLandscape){
+
+	&.neutral{
+		background-color: $neutral;
+	}
+
+	@include mq(embedFiveEighty){
+		height: 160px;
 		width: calc(25% - 24px);
 		float: left;
+		    		
 	}
 
-	@include mq(tablet){
-		    width: calc(25% - 24px);
-    		
-	}
+	
 }
 
-.gv-caption{
-	font-family:"Guardian Text Sans Web", Helvetica, Arial, sans-serif;
-	font-size: 12px;
-	margin-top: 3px;
-}
+
+
+.gv-team-row{
+		display:inline-block;
+		width:auto;
+		border: none;
+		margin:0;
+		padding:0 6px 0 0;
+		float: left;
+
+		&.header{
+			border:none;
+			margin-bottom:6px;
+			h4{
+				margin: 0;
+				width:auto;
+				float: left;
+				font-size:21px;
+
+			}
+		}
+
+		@include mq(embedFiveEighty){
+				width:100%;
+				display:block;
+				border-bottom: 1px dotted #CCC;
+				padding: 0;
+
+				&.header{
+				border:none;
+				margin-bottom:6px;
+					h4{
+						margin: 0;
+						width:auto;
+						float: left;
+						font-size:18px;
+					}
+				}
+			}
+
+		}
+		
+		.gv-caption{
+			margin-top: 3px;
+			font-family:"Guardian Text Sans Web", Helvetica, Arial, sans-serif;
+			font-size: 12px;
+			line-height: 14px;
+		}
+
+		.gv-row-txt{
+			font-family: "Guardian Egyptian Web",Georgia,serif;
+			font-size: 16px;
+			width: auto;
+			margin:0;
+			padding:0;
+		}
+
 
 .gv-table-col-head{
 	position: absolute;
@@ -94,40 +184,7 @@ $button: #b72166;
 		left:0;
 	}
 }
-.gv-team-row{
-	display:inline-block;
-	width:auto;
-	border: none;
-	margin:0;
-	padding:0 6px 0 0;
-	float: left;
 
-	@include mq(mobileLandscape){
-		width:100%;
-		display:block;
-		border-bottom: 1px dotted #CCC;
-		padding: 0;
-
-	}
-	&.header{
-		border:none;
-		margin-bottom:6px;
-		h4{
-			margin: 0;
-			width:auto;
-			float: left;
-			font-size:21px;
-		}
-	}
-
-}
-.gv-row-txt{
-	font-family: "Guardian Egyptian Web",Georgia,serif;
-	font-size: 16px;
-	width: auto;
-	margin:0;
-	padding:0;
-}
 
 
 
@@ -147,9 +204,6 @@ $button: #b72166;
 	cursor:pointer;
 }
 
-
-
-
 .display-mobile{
 	display:inline-block;
 	@include mq(mobileLandscape){
@@ -164,6 +218,16 @@ $button: #b72166;
 		display:inline-block;
 	}
 }
+
+.no-margin{
+	margin: 0 !important;
+}
+
+.display-none{
+	display:none;
+}
+
+
 
 
 

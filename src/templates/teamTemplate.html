@@ -1,7 +1,7 @@
 {{#each teams}}​ 	
-      	  <div class="gv-team-row" data-team="{{teamName}}" data-rank="{{fifaRank}}">
-            <span class="gv-row-txt left-align">{{teamName}}</span>
-            <span class="gv-row-txt left-align display-mobile">({{fifaRank}})</span>
-            <span class="gv-row-txt right-align display-none-mobile">{{fifaRank}}</span>
+      	  <div class="gv-team-row">
+            <span class="gv-row-txt left-align gv-row-team display-none" data-team="{{teamName}}" data-pot="{{drawPot}}">{{teamName}}</span>
+            <span class="gv-row-txt left-align display-mobile" data-rank="{{fifaRank}}">({{fifaRank}})</span>
+            <span class="gv-row-txt right-align display-none-mobile" data-rank="{{fifaRank}}">{{fifaRank}}</span>
           </div>
  {{/each}}

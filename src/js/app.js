@@ -2,10 +2,11 @@ import Handlebars from 'handlebars/dist/handlebars'
 import xr from 'xr'
 
 import mainTemplate from '../templates/main.html'
+import potTemplate from '../templates/potTemplate.html'
 import groupsAllTemplate from '../templates/groupsAllTemplate.html'
 import teamTemplate from '../templates/teamTemplate.html'
 
-import {groupBy, sortByKeys, shuffle, compareValues } from './libs/arrayUtils'
+import {groupBy, sortByKeys, shuffle, compareValues, changeFirstObj } from './libs/arrayUtils'
 
 const dataurl = "https://interactive.guim.co.uk/docsdata-test/1mINILM6lN7p0soJ2eHKEd08bW-0Hw3bpf3nhfng2jrA.json";
 
@@ -14,53 +15,83 @@ var groupsOriginal = [
 		"group": "A",
 		"teams": ["","","",""],
 		"strengthScore": 0,
-		"strengthRating" : "weak"
+		"strengthRating" : "weak",
+		"associationOne": "",
+		"associationTwo": "",
+		"associationThree": "",
+		"associationFour": ""
 	},
 	{
 		"group": "B",
 		"teams": ["","","",""],
 		"strengthScore": 0,
-		"strengthRating" : "weak"
+		"strengthRating" : "weak",
+		"associationOne": "",
+		"associationTwo": "",
+		"associationThree": "",
+		"associationFour": ""
 	},
 	{
 		"group": "C",
 		"teams": ["","","",""],
 		"strengthScore": 0,
-		"strengthRating" : "weak"
+		"strengthRating" : "weak",
+		"associationOne": "",
+		"associationTwo": "",
+		"associationThree": "",
+		"associationFour": ""
 	},
 	{
 		"group": "D",
 		"teams": ["","","",""],
 		"strengthScore": 0,
-		"strengthRating" : "weak"
+		"strengthRating" : "weak",
+		"associationOne": "",
+		"associationTwo": "",
+		"associationThree": "",
+		"associationFour": ""
 	},
 	{
 		"group": "E",
 		"teams": ["","","",""],
 		"strengthScore": 0,
-		"strengthRating" : "weak"
+		"strengthRating" : "weak",
+		"associationOne": "",
+		"associationTwo": "",
+		"associationThree": "",
+		"associationFour": ""
 	},
 	{
 		"group": "F",
 		"teams": ["","","",""],
 		"strengthScore": 0,
-		"strengthRating" : "weak"
+		"strengthRating" : "weak",
+		"associationOne": "",
+		"associationTwo": "",
+		"associationThree": "",
+		"associationFour": ""
 	},
 	{
 		"group": "G",
 		"teams": ["","","",""],
 		"strengthScore": 0,
-		"strengthRating" : "weak"
+		"strengthRating" : "weak",
+		"associationOne": "",
+		"associationTwo": "",
+		"associationThree": "",
+		"associationFour": ""
 	},
 	{
 		"group": "H",
 		"teams": ["","","",""],
 		"strengthScore": 0,
-		"strengthRating" : "weak"
+		"strengthRating" : "weak",
+		"associationOne": "",
+		"associationTwo": "",
+		"associationThree": "",
+		"associationFour": ""
 	}
 ];
-
-
 
 
 function init(){
@@ -72,15 +103,39 @@ function init(){
 
 		let h = document.querySelector(".gv-wrapper").offsetHeight;
 
+		buildView(newObj);
 
 		//fire this function after compiling html to size iframe correctly
 		window.resize();
 		
 	})	
 }
+
+function buildView(newObj){
+	//populatePots(newObj.pots)
+	fadeInTableBGs();
+	populateTeamFields();	
+	animateDraw(newObj);
+}
+
+
     
+function fadeInTableBGs(){
+	 Array.from(document.querySelectorAll('.gv-group-table')).forEach(el => {
+        //el.classList.add( el.getAttribute("data-strength"))
+    });
+}
+
+function populateTeamFields(){
+	Array.from(document.querySelectorAll('.gv-row-team')).forEach((el,k) => {
+        //console.log(el.getAttribute("data-team"), k);
+        //el.classList.add( el.getAttribute("data-strength"))
+    });
+}
+
 
 function compileHTML(newObj){
+
 
 	let dataIn = newObj;
 
@@ -90,7 +145,8 @@ function compileHTML(newObj){
     });
 
     Handlebars.registerPartial({
-        'team': teamTemplate
+        'team': teamTemplate,
+        'pot': potTemplate
     });
 
     var content = Handlebars.compile(
@@ -122,7 +178,7 @@ function formatData(data){
     pots = sortByKeys(pots);
     newObj.pots = pots;
 
-    var draw = makeDraw(pots)
+    var draw = setDrawData(pots)
     newObj.drawArr = draw;
 	newObj.teams = teams;
 
@@ -130,32 +186,36 @@ function formatData(data){
 }
 
 
-function makeDraw(pots){
+function setDrawData(pots){
 	let drawCount = groupsOriginal.length;
 
 		pots.map((pot,k) => {
 			pot.shuffleArr = shuffle(pot.objArr);
-			if (pot.sortOn == 1){ pot.shuffleArr = (changeFirstObj(pot.shuffleArr, e => e.Team === 'Russia') )};
+			if (pot.sortOn == 1){ 
+				pot.shuffleArr = (changeFirstObj(pot.shuffleArr, e => e.Team === 'Russia') )
+				pot.objArr = (changeFirstObj(pot.objArr, e => e.Team === 'Russia') )
+				pot.firstPot = true;
+			};
+			if (pot.sortOn != 1){ 
+				pot.hidePot = true;
+			}
 
 			populateGroups(pot.shuffleArr);
+
+
 		})
 
-
-
 	groupsOriginal.sort(compareValues('strengthScore')); 
-
-	groupsOriginal.map((o,k) => {
-		if(k == 0){ o.strengthRating = "strongest"}
-		if(k > 0 && k < 3){ o.strengthRating = "strong"}
-		if(k > 2 && k < 5){ o.strengthRating = "balanced"}
-		if(k > 4 && k < 7){ o.strengthRating = "weak"}
-		if(k > 6){ o.strengthRating = "weakest"}
-	});
-
+		groupsOriginal.map((o,k) => {
+			if(k == 0){ o.strengthRating = "strongest"}
+			if(k > 0 && k < 3){ o.strengthRating = "strong"}
+			if(k > 2 && k < 5){ o.strengthRating = "balanced"}
+			if(k > 4 && k < 7){ o.strengthRating = "weak"}
+			if(k > 6){ o.strengthRating = "weakest"}
+		});
 	groupsOriginal.sort(compareValues('group'));
 
-	return groupsOriginal;
-	
+	return groupsOriginal;	
 }
 
 function populateGroups(a){
@@ -164,21 +224,58 @@ function populateGroups(a){
 		groupsOriginal[k].teams[team.drawPot-1] = team;
 		groupsOriginal[k].strengthScore += Number(team.fifaRank);
 	})	
+	
 }
 
+function animateDraw(a){
+	
+	const groupAniTime = 8000;
 
+	Array.from(a.pots).forEach((pot,k) => {
+		
+		var currentPotNum = pot.sortOn
 
+		
+		let nextPotTime = setTimeout(function(){
 
+			Array.from(document.querySelectorAll('.gv-pot-div')).forEach((el) => {
+				
+				if(el.getAttribute("potRef") == currentPotNum){
+					el.classList.remove("display-none");
+				}
 
-function changeFirstObj(a, fn) {
-  var non_matches = [];
-  var matches = a.filter(function(e, i, a) {
-    var match = fn(e, i, a);
-    if (!match) non_matches.push(e);
-    return match;
-  });
-  return matches.concat(non_matches);
+				if(el.getAttribute("potRef") != currentPotNum){
+					el.classList.add("display-none");
+				}
+			})
+			animateTeams(pot.shuffleArr, groupAniTime);
+		}, k * groupAniTime)
+        //console.log(el.getAttribute("data-team"), k);
+        //el.classList.add( el.getAttribute("data-strength"))
+    });
+
+	
 }
+
+function animateTeams(a,groupAniTime){
+	const teamAniTime = groupAniTime / (Math.floor(a.length));
+	a.map((team,k) => {
+		let currentTeamName = team.Team;
+		let nextTeamTime = setTimeout(function(){
+
+			Array.from(document.querySelectorAll('.gv-row-team')).forEach((el) => {
+				
+				if(el.getAttribute("data-team") == currentTeamName){
+					el.classList.remove("display-none");
+				}
+
+				
+			})
+
+		}, k * teamAniTime)
+	})
+}
+
 
 
 // var simulatorTemplate = Handlebars.compile( 
@@ -257,13 +354,14 @@ function changeFirstObj(a, fn) {
 // 	animateDraw(first);
 // }
 
-// function animateDraw(first){
+// function animateDraw(a, first){
 // 	var currentPot = 1;
 // 	if(!first){
 // 		updatePot(currentPot);
 // 	}
+// }
 	
-// 	function animateTeam(no,newPot){
+// function animateTeam(no,newPot){
 // 		var teamEl = document.querySelector('.team-order-' + no);
 // 		var currentFlagEl = document.querySelector('.current-flag-' + teamEl.getAttribute('data-team-id'));
 
@@ -315,7 +413,6 @@ function changeFirstObj(a, fn) {
 // 		var flagEl = document.createElement('div');
 // 		flagEl.className = "current-flag-container current-flag-" + team.id;
 // 		flagEl.innerHTML = "<img src='" + team.flag + "' />";
-
 // 		statusFlagsEl.appendChild(flagEl);
 // 	})
 // }
