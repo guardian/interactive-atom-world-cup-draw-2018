@@ -1,5 +1,15 @@
-{{#each pots}}
-{{>pot}}
+<h5 class="gv-pot-header">Click draw to see teams</h5>
+
+<div class="gv-pot-div-intro" id="gvPot{{sortOn}}" potRef="{{sortOn}}">
+
+	Intro text here intro text here ntro text here intro text 
+
+</div>
+
+
+{{#each buckets}}
+
+	{{>pot}}
 
 {{/each}}
 
@@ -8,8 +18,8 @@
 
 {{#each drawArr}}
 	<div class="gv-group-table" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
-		<div class="gv-team-row header"><span class="gv-table-col-head {{strengthRating}}" data-strength="{{strengthRating}}">{{strengthRating}}</span></div>
-		<div class="gv-team-row header" style="margin-bottom: 0;"><h4>Group {{group}}</h4>{{#if firstGroup}}<span class="gv-caption right-align display-none-mobile no-margin">fifa ranking</span>{{/if}}</div>
+		<div class="gv-team-row header"><span class="gv-table-col-head {{strengthRating}}" data-strength="{{strengthRating}}">&nbsp;</span></div>
+		<div class="gv-team-row header"><h4>Group {{group}}</h4>{{#if firstGroup}}<span class="gv-caption right-align-small display-none-mobile no-margin">fifa ranking</span>{{/if}}</div>
 
 
 		{{>team}}
