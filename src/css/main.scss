@@ -79,14 +79,40 @@ body{
 	height:auto;
 }
 
+.gv-table-minor-header{
+	position: absolute;
+	margin: 0;
+	width:auto;
+	top: 18px;
+    left: 96px;
+	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	line-height: 14px;
+	text-align:right;
+	@include mq(embedFiveEighty){
+		right:12px;
+		top: 36px;
+		width:60px;
+	}
+	
+	@include mq(embedSevenEighty){
+		width:auto;
+		top: 50px;
+	}
+
+
+}
+
 .gv-group-table{
 	position: relative;
 	display:block;
 	width: 100%;
 	float: none;
-	min-height:72px;
+	border-bottom: 1px solid #FFF;
+	height:auto;	
+	min-height:56px;
     margin: 0;
-    padding: 12px;
+    padding: 12px 8px 0;
     background-color: $neutral;
     -webkit-transition: background-color 0.5s ease;
     -moz-transition: background-color 0.5s ease;
@@ -100,7 +126,6 @@ body{
 	&.strong{
 		transition-delay:1.5s; 
 	    background-color: $strong; 
-	   
 	}
 	&.balanced{
 		transition-delay:1s; 
@@ -119,10 +144,16 @@ body{
 		background-color: $neutral;
 	}
 
+	// &.strongest, &.strong, &.balanced, &.weak, &.weakest, &.neutral{
+	// 	// border-bottom: 1px solid #CCC;
+	// }
+
 	@include mq(embedFiveEighty){
 		height: 160px;
 		width: calc(25% - 24px);
 		float: left;
+		padding: 8px 12px 12px;
+		border:none;
 		    		
 	}
 
@@ -136,10 +167,10 @@ body{
 		width:auto;
 		height:16px;
 		border: none;
-		margin:0 6px 0 0;
-		padding:0 6px 0 0;
+		margin:0;
 		float: left;
-
+		font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
+		font-size: 14px;
 
 		@include mq(embedFiveEighty){
 				display:inline-block;
@@ -162,9 +193,11 @@ body{
 
 		&.header{
 			border:none;
-			margin-bottom:6px;
+			margin-bottom:9px;
 			width:320px;
 			float: none;
+			font-family: "Guardian Egyptian Web", Georgia, serif;
+			
 				h4{
 					margin: 0;
 					width:auto;
@@ -177,6 +210,8 @@ body{
 				width:auto;
 				float: left;
 				clear: both;
+				font-family: "Guardian Egyptian Web", Georgia, serif;
+				font-size: 16px;
 				
 			}
 		}
@@ -204,12 +239,15 @@ body{
 
 .gv-table-col-head{
 	position: absolute;
-    right: 42px;
-	font-family:"Guardian Text Sans Web", Helvetica, Arial, sans-serif;
+    right: 30px;
+    top: 9px;
+	font-family:"Guardian Text Sans Web", Helvetica, Arial, sans-serif !important;
 	font-size: 16px;
-	font-weight:900;
+	font-weight:700;
 	margin-top: 3px;
 	color:#fff;
+	text-align:right;
+	width: auto !important;
 	&.balanced, &.weak{
 		color:#767676;
 	}
@@ -220,6 +258,11 @@ body{
 	}
 }
 
+
+.gv-rank-text{
+	font-size:12px;
+	margin-right: 5px;
+}
 
 
 

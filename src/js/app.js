@@ -262,9 +262,10 @@ function setDrawData(pots){
 
 function populateGroups(a){
 	a.map((team,k) => {	
-		if(k == 0){ groupsOriginal[k].firstGroup = true }
+
 		groupsOriginal[k].teams[team.drawPot-1] = team;
 		groupsOriginal[k].strengthScore += Number(team.fifaRank);
+		
 	})	
 	
 }
