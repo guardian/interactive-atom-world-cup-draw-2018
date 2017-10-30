@@ -1,0 +1,14 @@
+Things on our list:
+- we could have all teams populate at once, then the groups get their colour at once. so a two-step draw: first teams, then colours. XXX
+- Russia should be in already before the draw starts, in group A, position 1: Russia (Fifa ranking 65) HOST. After draw is simulated, we lose Fifa ranking and HOST XXX
+- lines separating teams need to be in from the beginning, before simulation begins XXX
+- top seedings listed at the top of the draw XXX
+- new colours! TESTING
+- weak and weakest on a greyscale TESTING
+
+FOR TUESDAY
+---- animate btn bg
+---- check the number of teams from each FA allowed in each group !!!!!OBS
+
+
+---- scroll into view timed animation if no user interaction

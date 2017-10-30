@@ -1,27 +1,22 @@
-<h5 class="gv-pot-header">Click draw to see teams</h5>
+<h5 class="gv-pot-header">Top seeds</h5>
 
-<div class="gv-pot-div-intro" id="gvPot{{sortOn}}" potRef="{{sortOn}}">
-
-	Intro text here intro text here ntro text here intro text 
+<div class="gv-pot-div-intro">
+Germany, Brazil, Portugal, Argentina,
+Belgium, Poland, France and Russia (host)
 
 </div>
 
 
-{{#each buckets}}
-
-	{{>pot}}
-
-{{/each}}
 
 
 <div class="gv-table-wrapper ">
 
 {{#each drawArr}}
 	<div class="gv-group-table" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
-		<div class="gv-team-row header gv-table-col-head {{strengthRating}}" data-strength="{{strengthRating}}">&nbsp;</div>
-		<div class="gv-team-row header"><h4>Group {{group}}</h4>{{#if firstGroup}}
-		<div class="gv-table-minor-header display-none-mobile">fifa ranking</div>
-		<div class="gv-table-minor-header display-mobile">(fifa ranking)</div>
+		<div class="gv-table-col-head {{strengthRating}}" data-strength="{{strengthRating}}">&nbsp;</div>
+		<div class="gv-team-row header"><h4>Group {{group}}</h4>
+		{{#if firstGroup}}
+		<div class="gv-table-minor-header display-none-mobile">FIFA ranking</div>
 		{{/if}}
 	</div>
 

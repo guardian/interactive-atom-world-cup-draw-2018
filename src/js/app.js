@@ -10,12 +10,13 @@ import {groupBy, sortByKeys, shuffle, compareValues, changeFirstObj } from './li
 
 const dataurl = "https://interactive.guim.co.uk/docsdata-test/1mINILM6lN7p0soJ2eHKEd08bW-0Hw3bpf3nhfng2jrA.json";
 
-const groupAniTime = 1000;
+const groupAniTime = 10;
 
 var groupsOriginal = [
 	{
 		"group": "A",
 		"teams": ["","","",""],
+		"firstGroup": true,
 		"strengthScore": 0,
 		"strengthRating" : "weak",
 		"associationOne": "",
@@ -195,6 +196,9 @@ function formatData(data){
 		team.teamName = team.Team;
 		team.drawPot = team["Draw pot"];
 		team.fifaRank = team["october-rank"];
+		if(team.drawPot == 1) { team.seeded = true };
+		if(team.drawPot == 1 && team.teamName == "Russia") { team.hostTeam = true };
+
 		teams.push(team);
 	})
 
@@ -236,6 +240,7 @@ function setDrawData(pots){
 				pot.shuffleArr = (changeFirstObj(pot.shuffleArr, e => e.Team === 'Russia') )
 				pot.objArr = (changeFirstObj(pot.objArr, e => e.Team === 'Russia') )
 				pot.firstPot = true;
+				console.log(pot.objArr)
 			};
 			if (pot.sortOn != 1){ 
 				pot.hidePot = true;
@@ -262,21 +267,16 @@ function setDrawData(pots){
 
 function populateGroups(a){
 	a.map((team,k) => {	
-
 		groupsOriginal[k].teams[team.drawPot-1] = team;
 		groupsOriginal[k].strengthScore += Number(team.fifaRank);
-		
+
 	})	
 	
 }
 
 function animateDraw(a){
 	
-
-
-	document.querySelector(".gv-pot-div-intro").classList.add("display-none");
-
-
+//document.querySelector(".gv-pot-div-intro").classList.add("display-none");
 
 	Array.from(a.pots).forEach((pot,k) => {
 		
@@ -288,9 +288,7 @@ function animateDraw(a){
 				
 				if(el.getAttribute("potRef") == currentPotNum){
 					el.classList.remove("display-none");
-					document.querySelector(".gv-pot-header").innerHTML = "Seeding pot "+currentPotNum;
-
-
+					//document.querySelector(".gv-pot-header").innerHTML = "Seeding pot "+currentPotNum;
 				}
 
 				if(el.getAttribute("potRef") != currentPotNum){
@@ -326,7 +324,13 @@ function animateTeams(a,groupAniTime){
 
 			Array.from(document.querySelectorAll('.gv-team-row')).forEach((el) => {
 				if(el.getAttribute("data-team") == currentTeamName){
-					el.classList.remove("display-none");
+					Array.from(el.children).forEach((child) => {
+						if(child.tagName == "span" || child.tagName == "SPAN"){
+							child.classList.remove("display-none");
+						}
+					})	
+
+					
 				}
 			})
 
@@ -341,6 +345,12 @@ function animateTeams(a,groupAniTime){
 		
 
 	})
+
+	document.querySelectorAll(".host-item").forEach((el) => {
+		el.classList.add("display-none");
+	});
+
+
 	//fire this function after compiling html to size iframe correctly
 		
 }

@@ -7,14 +7,26 @@
 
 // Uncomment for full screen (including immersive article main media)
 //@import "fullscreen";
-
-$strongest: #c45185;
-$strong: #eabfd2;
-$balanced: #EFEFEF;
-$weak: #bce0f3;
-$weakest: #4696ca;
+$accent-color: #FFCC00;
 $neutral: #e8e8e8;
-$button: #b72166;
+
+$neutral-1:#333333; 
+$neutral-2:#767676; 
+$neutral-3:#bdbdbd; 
+$neutral-4:#dcdcdc; 
+$neutral-5:#eaeaea; 
+$neutral-6:#f6f6f6;
+
+
+$strongest:  rgba($accent-color, 1);
+$strong:  rgba($accent-color, 0.8);
+$balanced:  rgba($accent-color, 0.6);
+$weak: rgba($neutral, 0.6);
+$weakest: rgba($neutral, 0.4);
+
+$button: $accent-color;
+
+$ani-delay:0.5s;
 
 // $strongest: #FF6600;
 // $strong: #ffbb00;
@@ -84,20 +96,20 @@ body{
 	margin: 0;
 	width:auto;
 	top: 18px;
-    left: 96px;
+    left: 84px;
 	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	line-height: 14px;
 	text-align:right;
 	@include mq(embedFiveEighty){
 		right:12px;
-		top: 36px;
+		top: 33px;
 		width:60px;
 	}
 	
 	@include mq(embedSevenEighty){
 		width:auto;
-		top: 50px;
+		top: 48px;
 	}
 
 
@@ -118,35 +130,6 @@ body{
     -moz-transition: background-color 0.5s ease;
     -o-transition: background-color 0.5s ease;
     transition: background-color 0.5s ease;
-   
-    &.strongest{
-    	transition-delay:2s; 
-		background-color:  $strongest; 
-	}
-	&.strong{
-		transition-delay:1.5s; 
-	    background-color: $strong; 
-	}
-	&.balanced{
-		transition-delay:1s; 
-		background-color: $balanced;
-	}
-	&.weak{
-		transition-delay:0.5s; 
-		background-color: $weak;
-	}
-	&.weakest{
-		transition-delay:0s; 
-		background-color: $weakest;
-	}
-
-	&.neutral{
-		background-color: $neutral;
-	}
-
-	// &.strongest, &.strong, &.balanced, &.weak, &.weakest, &.neutral{
-	// 	// border-bottom: 1px solid #CCC;
-	// }
 
 	@include mq(embedFiveEighty){
 		height: 160px;
@@ -155,11 +138,56 @@ body{
 		padding: 8px 12px 12px;
 		border:none;
 		    		
+	}	
+}
+
+
+.strongest{
+    	transition-delay:$ani-delay; 
+		background-color:  $strongest; 
+	}
+.strong{
+		transition-delay:$ani-delay; 
+	    background-color: $strong; 
+	}
+.balanced{
+		transition-delay:$ani-delay; 
+		background-color: $balanced;
+	}
+.weak{
+		transition-delay:$ani-delay; 
+		background-color: $weak;
+	}
+.weakest{
+		transition-delay:$ani-delay; 
+		background-color: $weakest;
 	}
 
+.neutral{
+		background-color: $neutral;
+	}
+
+
+
+.gv-team-text{
+	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
+	font-size:12px;
+	@include mq(embedThreeEighty){
+		font-size: 14px;
+	}
 	
 }
 
+.gv-rank-text{
+	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
+	font-size:10px;
+	margin: 0 5px 0 0;
+	@include mq(embedThreeEighty){
+		font-size: 12px;
+		margin: 0 5px 0 0;
+	}
+	
+}
 
 
 .gv-team-row{
@@ -169,15 +197,14 @@ body{
 		border: none;
 		margin:0;
 		float: left;
-		font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
-		font-size: 14px;
+		
 
 		@include mq(embedFiveEighty){
 				display:inline-block;
 				width:100%;
 				height:24px;
 				display:block;
-				border-bottom: 1px dotted #CCC;
+				border-top: 1px dotted #333;
 				padding: 0;
 
 				&.header{
@@ -193,7 +220,8 @@ body{
 
 		&.header{
 			border:none;
-			margin-bottom:9px;
+			margin-top:0px;
+			margin-bottom:6px;
 			width:320px;
 			float: none;
 			font-family: "Guardian Egyptian Web", Georgia, serif;
@@ -210,12 +238,17 @@ body{
 				width:auto;
 				float: left;
 				clear: both;
+				margin-top:33px;
 				font-family: "Guardian Egyptian Web", Georgia, serif;
 				font-size: 16px;
 				
 			}
 		}
 
+}
+
+.no-border{
+    border:none;
 }
 
 		
@@ -248,21 +281,32 @@ body{
 	color:#fff;
 	text-align:right;
 	width: auto !important;
-	&.balanced, &.weak{
-		color:#767676;
+
+	&.weak, &.weakest, &.balanced,  &.strong, &.strongest{
+		background-color:rgba(#FFFFFF, 0) !important;
 	}
 
-	@include mq(mobileLandscape){
-		position:relative;
-		left:0;
+	&.weakest, &.weak{
+		color: $neutral-2 !important;
+	}
+
+	&.balanced,  &.strong, &.strongest{
+		color: $neutral-1 !important;
+	}
+
+	&.strongest{
+		color: #000;
+	}
+
+	@include mq(embedFiveEighty){
+		top: 9px;
+		left:12px;
+		text-align:left;
 	}
 }
 
 
-.gv-rank-text{
-	font-size:12px;
-	margin-right: 5px;
-}
+
 
 
 
@@ -274,10 +318,13 @@ body{
 	border-radius:1000px;
 	background-color: $button;
 
-	text-align:center;
+	font-family: "Guardian Egyptian Web", Georgia, serif;
 	font-size: 20px;
-	color:#FFF;
+	font-weight:900;
+	text-align:center;
+	color:#222;
 	margin-left: calc(50% - 90px);
+
 
 	cursor:pointer;
 }

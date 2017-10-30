@@ -1,7 +1,12 @@
 {{#each teams}}​ 	
-      	  <div class="gv-team-row display-none" data-team="{{teamName}}">
-      	  	<span class="gv-team-text" >{{teamName}}</span>
-      	  	<span class="display-mobile gv-rank-text" >({{fifaRank}})</span> 
-      	  	<span class="display-none-mobile" style="position:absolute; right: 12px; text-align:right;">{{fifaRank}}</span>
+      	  <div class="gv-team-row {{#if seeded}}no-border{{/if}}" data-team="{{teamName}}">
+      	  	{{#if hostTeam}}
+      	  	<span class="gv-team-text host-item">Russia <span class="display-none-mobile" style="color:#CCC; font-size:10px;">HOST</span></span>
+      	  	<span class="gv-rank-text display-mobile host-item" >(FIFA ranking 65)  <span class="display-mobile" style="color:#CCC; font-size:10px;">HOST</span></span> 
+      	  	<span class="gv-rank-text display-none-mobile host-item" style="position:absolute; right: 12px; text-align:right;">65</span>    
+      	  	{{/if}}
+      	  	<span class="gv-team-text display-none" >{{teamName}}</span>
+      	  	<span class="gv-rank-text display-mobile  display-none" >({{fifaRank}})</span> 
+      	  	<span class="gv-rank-text display-none-mobile  display-none" style="position:absolute; right: 12px; text-align:right;">{{fifaRank}}</span>
       	  </div>
 {{/each}}

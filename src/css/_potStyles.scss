@@ -8,9 +8,10 @@
 .gv-pot-header{
 	margin: 0;
 	width:auto;
-	font-family: "Guardian Egyptian Web", Georgia, serif;
-	font-size: 16px;
-	font-weight:900;
+	font-family: "Guardian Text Sans Web", Helvetica, Arial, sans-serif !important;
+    font-size: 16px;
+    font-weight: 700;
+
 	@include mq(embedFiveEighty){
 		font-size: 16px;
 	}
@@ -26,13 +27,11 @@
 }
 
 .gv-pot-div-intro, .gv-pot-item{
-	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
-	font-size: 14px;
+	font-family:"Guardian Text Sans Web", Helvetica, Helvetica, Arial, sans-serif;
+	font-size:14px;
+	height:auto;
 
-		@include mq(embedFiveEighty){
-			font-family: "Guardian Egyptian Web", Georgia, serif;
-			font-size: 16px;
-		}
+
 }
 
 .fifty-pc{
