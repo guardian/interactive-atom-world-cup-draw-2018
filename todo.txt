@@ -9,6 +9,8 @@ Things on our list:
 FOR TUESDAY
 ---- animate btn bg
 ---- check the number of teams from each FA allowed in each group !!!!!OBS
-
+---- add redraw fnc to btn
 
 ---- scroll into view timed animation if no user interaction
+
+---- line height on intro text for  mobile view

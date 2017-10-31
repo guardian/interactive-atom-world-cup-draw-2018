@@ -8,9 +8,12 @@ import teamTemplate from '../templates/teamTemplate.html'
 
 import {groupBy, sortByKeys, shuffle, compareValues, changeFirstObj } from './libs/arrayUtils'
 
+import _differenceBy from 'lodash.differenceBy'
+
 const dataurl = "https://interactive.guim.co.uk/docsdata-test/1mINILM6lN7p0soJ2eHKEd08bW-0Hw3bpf3nhfng2jrA.json";
 
 const groupAniTime = 10;
+
 
 var groupsOriginal = [
 	{
@@ -191,11 +194,17 @@ function compileHTML(newObj){
 function formatData(data){
 	let newObj = {};
 	let teams = [];
-
+	var tArr = [
+		{"pot":"one", "assocArr": [], "shuffleArr": []},
+		{"pot":"two", "assocArr": [], "shuffleArr": []},
+		{"pot":"three", "assocArr": [], "shuffleArr": []},
+		{"pot":"four", "assocArr": [], "shuffleArr": []},
+	];
 	data.sheets.testTeams.map((team) => {
 		team.teamName = team.Team;
 		team.drawPot = team["Draw pot"];
 		team.fifaRank = team["october-rank"];
+		team.association = team.Association;
 		if(team.drawPot == 1) { team.seeded = true };
 		if(team.drawPot == 1 && team.teamName == "Russia") { team.hostTeam = true };
 
@@ -208,18 +217,81 @@ function formatData(data){
 
     let buckets = pots;
     buckets.map((bucket,k) => {
-			bucket.shuffleArr = shuffle(bucket.objArr);
-			if (bucket.sortOn == 1){ 
+
+
+			if (bucket.sortOn == 1){
+				bucket.shuffleArr = shuffle(bucket.objArr); 	
 				bucket.shuffleArr = (changeFirstObj(bucket.shuffleArr, e => e.Team === 'Russia') )
 				bucket.objArr = (changeFirstObj(bucket.objArr, e => e.Team === 'Russia') )
 				bucket.firstPot = true;
+
+				tArr[0].shuffleArr = bucket.shuffleArr;
+
+				tArr[0].shuffleArr.map((o) => {
+					tArr[0].assocArr.push(o.association)
+				})
 			};
+
+			//if (bucket.sortOn == 2){
+			
+				// let newArr = arrayToBeSorted.filter(e => arrayToCompare.map(o => o.association).includes(function(e){return e.association != o.association}));
+
+				// console.log(newArr)
+
+				//let newArr = arrayToBeSorted.filter(e => !arrayToCompare.map(o => o.association).includes(e.association));
+
+				//var result = arrayToCompare.filter(e => !arrayToBeSorted.find(a => e.association === a.association));
+				//var result = _differenceBy(arrayToBeSorted, arrayToCompare, 'association');
+
+				//console.log(arrayToBeSorted,arrayToCompare,result)
+
+
+				
+			//}
+
+
+			// if (bucket.sortOn == 2){
+
+			// 	let bucketOne = buckets[0].shuffleArr;
+			// 	let tempArrTwo = [];
+			// 	let oddTeams = [];
+
+			// 	bucket.objArr.map((team,k) =>{
+
+			// 			if(team.association != bucketOne[k].association){
+			// 				tempArrTwo[k] = team;
+			// 			}
+
+			// 			if(team.association == bucketOne[k].association){
+			// 				team.oldSlot = k;
+			// 				var temp = {"association": team.association, "freeslot":true}
+			// 				tempArrTwo[k] = temp;
+			// 				oddTeams.push(team);
+			// 			}
+			// 	}) 
+
+			// 	if(oddTeams.length > 0){
+			// 		for(var i = 0; i < oddTeams.length; i++){
+					
+			// 			tempArrTwo.map((tt){
+			// 				if(tt.freeslot && tt.association != oddTeams[i].association){
+								
+			// 				}
+			// 			})
+
+			// 		}
+			// 	}
+
+			// 	console.log(tempArrTwo, oddTeams)
+			// };
+
+			
 
 
 		})
 
 
-    //add a  nother shuffle here
+
 
     var draw = setDrawData(pots)
     newObj.drawArr = draw;
@@ -240,15 +312,35 @@ function setDrawData(pots){
 				pot.shuffleArr = (changeFirstObj(pot.shuffleArr, e => e.Team === 'Russia') )
 				pot.objArr = (changeFirstObj(pot.objArr, e => e.Team === 'Russia') )
 				pot.firstPot = true;
-				console.log(pot.objArr)
 			};
 			if (pot.sortOn != 1){ 
+				pot.faObj = groupBy(pot.shuffleArr, 'association');
+				pot.faObj = sortByKeys(pot.faObj);
 				pot.hidePot = true;
 			}
+
+			// if(pot.sortOn == 2){
+				
+			// 	var headPot = pots[0].shuffleArr;
+
+			// 	headPot.map((t) => {
+			// 		pot.faObj.map((tt) =>{
+			// 			console.log(t.association == tt.sortOn, tt.objArr)
+			// 		})
+			// 	})
+
+
+
+ 		// 		//pot.faObj = sortByKeys(pots);
+   //  			console.log(pot.faObj)
+
+   //  			//pot.faObj
+			// }
 
 			populateGroups(pot.shuffleArr);
 
 		})
+
 
 	groupsOriginal.sort(compareValues('strengthScore')); 
 

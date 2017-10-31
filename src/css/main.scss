@@ -17,12 +17,14 @@ $neutral-4:#dcdcdc;
 $neutral-5:#eaeaea; 
 $neutral-6:#f6f6f6;
 
+$comment-support-1: #7d7569;
+
 
 $strongest:  rgba($accent-color, 1);
-$strong:  rgba($accent-color, 0.8);
-$balanced:  rgba($accent-color, 0.6);
-$weak: rgba($neutral, 0.6);
-$weakest: rgba($neutral, 0.4);
+$strong:  rgba($accent-color, 0.6);
+$balanced:  rgba($neutral, 0.4);
+$weak: rgba($comment-support-1, 0.2);
+$weakest: rgba($comment-support-1, 0.5);
 
 $button: $accent-color;
 
@@ -125,7 +127,7 @@ body{
 	min-height:56px;
     margin: 0;
     padding: 12px 8px 0;
-    background-color: $neutral;
+    background-color: $balanced;
     -webkit-transition: background-color 0.5s ease;
     -moz-transition: background-color 0.5s ease;
     -o-transition: background-color 0.5s ease;
@@ -133,10 +135,11 @@ body{
 
 	@include mq(embedFiveEighty){
 		height: 160px;
-		width: calc(25% - 24px);
+		width: calc(25% - 25px);
 		float: left;
 		padding: 8px 12px 12px;
-		border:none;
+		border-bottom:1px solid #FFF ;
+		border-right:1px solid #FFF ;
 		    		
 	}	
 }
@@ -284,19 +287,28 @@ body{
 
 	&.weak, &.weakest, &.balanced,  &.strong, &.strongest{
 		background-color:rgba(#FFFFFF, 0) !important;
+		color:rgba(#800c0c,0.8);
 	}
 
-	&.weakest, &.weak{
-		color: $neutral-2 !important;
+	&.balanced{
+		// color:$neutral-3;
 	}
 
-	&.balanced,  &.strong, &.strongest{
-		color: $neutral-1 !important;
-	}
+	// &.weakest, &.weak{
+	// 	color: $neutral-4 !important;
+	// }
 
-	&.strongest{
-		color: #000;
-	}
+	// &.balanced{
+	// 	color: $neutral-3 !important;
+	// }
+
+	//   &.strong, &.strongest{
+	// 	color: $neutral-2 !important;
+	// }
+
+	// &.strongest{
+	// 	color: #000;
+	// }
 
 	@include mq(embedFiveEighty){
 		top: 9px;
