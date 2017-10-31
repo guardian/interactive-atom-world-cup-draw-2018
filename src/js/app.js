@@ -14,7 +14,6 @@ const dataurl = "https://interactive.guim.co.uk/docsdata-test/1mINILM6lN7p0soJ2e
 
 const groupAniTime = 10;
 
-
 var groupsOriginal = [
 	{
 		"group": "A",
@@ -22,80 +21,89 @@ var groupsOriginal = [
 		"firstGroup": true,
 		"strengthScore": 0,
 		"strengthRating" : "weak",
-		"associationOne": "",
-		"associationTwo": "",
-		"associationThree": "",
-		"associationFour": ""
+		"AFC": 0,
+		"CAF": 0,
+		"CONCACAF": 0,
+		"CONMEBOL": 0,
+		"UEFA": 0
+
 	},
 	{
 		"group": "B",
 		"teams": ["","","",""],
 		"strengthScore": 0,
 		"strengthRating" : "weak",
-		"associationOne": "",
-		"associationTwo": "",
-		"associationThree": "",
-		"associationFour": ""
+		"AFC": 0,
+		"CAF": 0,
+		"CONCACAF": 0,
+		"CONMEBOL": 0,
+		"UEFA": 0
 	},
 	{
 		"group": "C",
 		"teams": ["","","",""],
 		"strengthScore": 0,
 		"strengthRating" : "weak",
-		"associationOne": "",
-		"associationTwo": "",
-		"associationThree": "",
-		"associationFour": ""
+		"AFC": 0,
+		"CAF": 0,
+		"CONCACAF": 0,
+		"CONMEBOL": 0,
+		"UEFA": 0
 	},
 	{
 		"group": "D",
 		"teams": ["","","",""],
 		"strengthScore": 0,
 		"strengthRating" : "weak",
-		"associationOne": "",
-		"associationTwo": "",
-		"associationThree": "",
-		"associationFour": ""
+		"AFC": 0,
+		"CAF": 0,
+		"CONCACAF": 0,
+		"CONMEBOL": 0,
+		"UEFA": 0
 	},
 	{
 		"group": "E",
 		"teams": ["","","",""],
 		"strengthScore": 0,
 		"strengthRating" : "weak",
-		"associationOne": "",
-		"associationTwo": "",
-		"associationThree": "",
-		"associationFour": ""
+		"AFC": 0,
+		"CAF": 0,
+		"CONCACAF": 0,
+		"CONMEBOL": 0,
+		"UEFA": 0
 	},
 	{
 		"group": "F",
 		"teams": ["","","",""],
 		"strengthScore": 0,
 		"strengthRating" : "weak",
-		"associationOne": "",
-		"associationTwo": "",
-		"associationThree": "",
-		"associationFour": ""
+		"AFC": 0,
+		"CAF": 0,
+		"CONCACAF": 0,
+		"CONMEBOL": 0,
+		"UEFA": 0
 	},
 	{
 		"group": "G",
 		"teams": ["","","",""],
 		"strengthScore": 0,
 		"strengthRating" : "weak",
-		"associationOne": "",
-		"associationTwo": "",
-		"associationThree": "",
-		"associationFour": ""
+		"AFC": 0,
+		"CAF": 0,
+		"CONCACAF": 0,
+		"CONMEBOL": 0,
+		"UEFA": 0
 	},
 	{
 		"group": "H",
 		"teams": ["","","",""],
 		"strengthScore": 0,
 		"strengthRating" : "weak",
-		"associationOne": "",
-		"associationTwo": "",
-		"associationThree": "",
-		"associationFour": ""
+		"AFC": 0,
+		"CAF": 0,
+		"CONCACAF": 0,
+		"CONMEBOL": 0,
+		"UEFA": 0
 	}
 ];
 
@@ -275,7 +283,7 @@ function formatData(data){
 					
 			// 			tempArrTwo.map((tt){
 			// 				if(tt.freeslot && tt.association != oddTeams[i].association){
-								
+
 			// 				}
 			// 			})
 
@@ -303,6 +311,17 @@ function formatData(data){
 }
 
 
+// pot.shuffleArr.map((t,n){
+// 					groupsOriginal[n][t.association] += 1;
+
+
+// 				})
+
+// 				pot.shuffleArr.map((t,n){
+// 					groupsOriginal[n][t.association] += 1;
+
+// 				})
+
 function setDrawData(pots){
 	let drawCount = groupsOriginal.length;
 
@@ -312,37 +331,30 @@ function setDrawData(pots){
 				pot.shuffleArr = (changeFirstObj(pot.shuffleArr, e => e.Team === 'Russia') )
 				pot.objArr = (changeFirstObj(pot.objArr, e => e.Team === 'Russia') )
 				pot.firstPot = true;
+
+				Array.from(pot.shuffleArr).forEach((t,n) => {
+					groupsOriginal[n][t.association] += 1;
+				})
 			};
+
+
+			if (pot.sortOn == 2){ 
+				Array.from(pot.shuffleArr).forEach((t,n) => {
+					console.log(t.association)
+					groupsOriginal[n][t.association] += 1;
+				})
+			}	
+	
 			if (pot.sortOn != 1){ 
-				pot.faObj = groupBy(pot.shuffleArr, 'association');
-				pot.faObj = sortByKeys(pot.faObj);
 				pot.hidePot = true;
 			}
 
-			// if(pot.sortOn == 2){
-				
-			// 	var headPot = pots[0].shuffleArr;
-
-			// 	headPot.map((t) => {
-			// 		pot.faObj.map((tt) =>{
-			// 			console.log(t.association == tt.sortOn, tt.objArr)
-			// 		})
-			// 	})
-
-
-
- 		// 		//pot.faObj = sortByKeys(pots);
-   //  			console.log(pot.faObj)
-
-   //  			//pot.faObj
-			// }
-
 			populateGroups(pot.shuffleArr);
+			
 
 		})
 
-
-	groupsOriginal.sort(compareValues('strengthScore')); 
+		groupsOriginal.sort(compareValues('strengthScore')); 
 
 		groupsOriginal.map((o,k) => {
 			if(k == 0){ o.strengthRating = "strongest"}
@@ -352,17 +364,56 @@ function setDrawData(pots){
 			if(k > 6){ o.strengthRating = "weakest"}
 		});
 
-	groupsOriginal.sort(compareValues('group'));
+		groupsOriginal.sort(compareValues('group'));
 
 	return groupsOriginal;	
 }
 
+
+
 function populateGroups(a){
+	var holdArr = [];
+
 	a.map((team,k) => {	
-		groupsOriginal[k].teams[team.drawPot-1] = team;
+		if(team.association != "UEFA" && team.drawPot != 1){
+			if(groupsOriginal[k][team.association] < 1){
+				groupsOriginal[k].teams[team.drawPot-1] = team;
+				groupsOriginal[k][team.association] += 1;
+			}
+			if(groupsOriginal[k][team.association] > 0){
+				holdArr.push(team)
+			}
+		}
+		if(team.association == "UEFA" && team.drawPot != 1){
+			if(groupsOriginal[k][team.association] < 2){
+				groupsOriginal[k].teams[team.drawPot-1] = team;
+				groupsOriginal[k][team.association] += 1;
+			}
+			if(groupsOriginal[k][team.association] > 1){
+				holdArr.push(team)
+			}
+		}
+
+		if  (team.drawPot == 1) {
+			groupsOriginal[k].teams[team.drawPot-1] = team;
+		}
+
+		// console.log(groupsOriginal[k])
+		
+
+		// groupsOriginal[k].teams[team.drawPot-1] = team;
 		groupsOriginal[k].strengthScore += Number(team.fifaRank);
 
 	})	
+
+	holdArr.map((team) => {
+		groupsOriginal.map((group,k) => {
+				console.log("continue here work out empty drawPot slot for each group and allocate team from holdArr", group[team.association], team)
+		})
+	})
+	
+
+
 	
 }
 
