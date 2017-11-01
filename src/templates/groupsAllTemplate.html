@@ -11,10 +11,10 @@ Belgium, Poland, France and Russia (host)
 
 <div class="gv-table-wrapper ">
 
-{{#each drawArr}}
+{{#each groups}}
 	<div class="gv-group-table" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
 		<div class="gv-table-col-head {{strengthRating}}" data-strength="{{strengthRating}}">&nbsp;</div>
-		<div class="gv-team-row header"><h4>Group {{group}}</h4>
+		<div class="gv-team-row header"><h4>{{groupName}}</h4>
 		{{#if firstGroup}}
 		<div class="gv-table-minor-header display-none-mobile">FIFA ranking</div>
 		{{/if}}

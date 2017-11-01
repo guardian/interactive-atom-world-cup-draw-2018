@@ -51,7 +51,10 @@
     "handlebars": "^4.0.11",
     "lodash": "^4.17.4",
     "lodash.differenceby": "^4.8.0",
+    "lodash.remove": "^4.7.0",
+    "lodash.sortby": "^4.7.0",
     "lodash.unionby": "^4.8.0",
+    "lodash.uniqby": "^4.7.0",
     "request-promise": "^4.2.2",
     "xr": "^0.3.0"
   }

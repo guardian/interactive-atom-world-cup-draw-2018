@@ -6,106 +6,183 @@ import potTemplate from '../templates/potTemplate.html'
 import groupsAllTemplate from '../templates/groupsAllTemplate.html'
 import teamTemplate from '../templates/teamTemplate.html'
 
-import {groupBy, sortByKeys, shuffle, compareValues, changeFirstObj } from './libs/arrayUtils'
+import {groupBy, sortByKeys, shuffle, compareValues, changeFirstObj, dedupe } from './libs/arrayUtils'
 
-import _differenceBy from 'lodash.differenceBy'
+import _sortBy from 'lodash.sortby'
+
+import _remove from 'lodash.remove'
 
 const dataurl = "https://interactive.guim.co.uk/docsdata-test/1mINILM6lN7p0soJ2eHKEd08bW-0Hw3bpf3nhfng2jrA.json";
 
 const groupAniTime = 10;
 
-var groupsOriginal = [
-	{
-		"group": "A",
-		"teams": ["","","",""],
-		"firstGroup": true,
-		"strengthScore": 0,
-		"strengthRating" : "weak",
-		"AFC": 0,
-		"CAF": 0,
-		"CONCACAF": 0,
-		"CONMEBOL": 0,
-		"UEFA": 0
+var holdArr = [];
 
-	},
-	{
-		"group": "B",
-		"teams": ["","","",""],
-		"strengthScore": 0,
-		"strengthRating" : "weak",
-		"AFC": 0,
-		"CAF": 0,
-		"CONCACAF": 0,
-		"CONMEBOL": 0,
-		"UEFA": 0
-	},
-	{
-		"group": "C",
-		"teams": ["","","",""],
-		"strengthScore": 0,
-		"strengthRating" : "weak",
-		"AFC": 0,
-		"CAF": 0,
-		"CONCACAF": 0,
-		"CONMEBOL": 0,
-		"UEFA": 0
-	},
-	{
-		"group": "D",
-		"teams": ["","","",""],
-		"strengthScore": 0,
-		"strengthRating" : "weak",
-		"AFC": 0,
-		"CAF": 0,
-		"CONCACAF": 0,
-		"CONMEBOL": 0,
-		"UEFA": 0
-	},
-	{
-		"group": "E",
-		"teams": ["","","",""],
-		"strengthScore": 0,
-		"strengthRating" : "weak",
-		"AFC": 0,
-		"CAF": 0,
-		"CONCACAF": 0,
-		"CONMEBOL": 0,
-		"UEFA": 0
-	},
-	{
-		"group": "F",
-		"teams": ["","","",""],
-		"strengthScore": 0,
-		"strengthRating" : "weak",
-		"AFC": 0,
-		"CAF": 0,
-		"CONCACAF": 0,
-		"CONMEBOL": 0,
-		"UEFA": 0
-	},
-	{
-		"group": "G",
-		"teams": ["","","",""],
-		"strengthScore": 0,
-		"strengthRating" : "weak",
-		"AFC": 0,
-		"CAF": 0,
-		"CONCACAF": 0,
-		"CONMEBOL": 0,
-		"UEFA": 0
-	},
-	{
-		"group": "H",
-		"teams": ["","","",""],
-		"strengthScore": 0,
-		"strengthRating" : "weak",
-		"AFC": 0,
-		"CAF": 0,
-		"CONCACAF": 0,
-		"CONMEBOL": 0,
-		"UEFA": 0
-	}
-];
+var groups = {
+		groupA: { groupName: 'Group A', teams: [], strengthScore:0, strengthRating: 'weak', firstGroup:true},
+		groupB: { groupName: 'Group B', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupC: { groupName: 'Group C', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupD: { groupName: 'Group D', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupE: { groupName: 'Group E', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupF: { groupName: 'Group F', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupG: { groupName: 'Group G', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupH: { groupName: 'Group H', teams: [], strengthScore:0, strengthRating: 'weak'}
+	};
+
+var groupKeys = ['groupA', 'groupB', 'groupC','groupD', 'groupE', 'groupF', 'groupG', 'groupH'];
+
+var pots;
+
+function formatData(data){
+	let newObj = {};
+	let teams = [];
+	
+	data.sheets.testTeams.map((team) => {
+		team.teamName = team.Team;
+		team.drawPot = team["Draw pot"];
+		team.fifaRank = team["october-rank"];
+		team.association = team.Association;
+		//if(team.cont == 'Europe'){ team.europeanException = 'europeanException' }
+		if(team.drawPot == 1) { team.seeded = true };
+		if(team.drawPot == 1 && team.teamName == "Russia") { team.hostTeam = true };
+
+		teams.push(team);
+
+	})
+
+	pots = groupBy(teams, 'drawPot');
+    pots = sortByKeys(pots);
+    
+    pots.map((pot) => {
+	    	if(pot.sortOn == 1){
+	    		pot.objArr = (changeFirstObj(pot.objArr, e => e.Team === 'Russia') )
+	    	}
+    	pot.teams = pot.objArr;
+    	pot.potName = pot.sortOn;
+    })
+
+    let generatedGroups = generateGroups();
+
+	Object.keys(generatedGroups).forEach(key => {
+	    var s = 0;
+	    generatedGroups[key].teams.map(o => {
+	    	s+= Number(o.fifaRank);    	
+	    })
+
+	    generatedGroups[key].strengthScore = s;	
+	});
+
+	var strengthScores = [];
+
+	Object.keys(generatedGroups).forEach(key => {
+	    var s = 0;
+	    generatedGroups[key].teams.map(o => {
+	    	s+= Number(o.fifaRank);    	
+	    })
+
+	    generatedGroups[key].strengthScore = s;	
+
+	    strengthScores.push(s);
+
+	});
+
+
+	strengthScores.sort(sortNumber);
+
+	Object.keys(generatedGroups).forEach(key => {
+	   
+	
+		strengthScores.map((n, k) => {
+			if(generatedGroups[key].strengthScore == n){
+				generatedGroups[key].groupRank = k; 
+				generatedGroups[key].strengthRating = assignStrength(k);
+			}
+
+		})
+
+
+	});
+
+	console.log(generatedGroups)
+
+    newObj.groups = generatedGroups;
+	newObj.pots = pots;
+
+	return newObj;
+
+}
+
+function sortNumber(a,b) {
+    return a - b;
+}
+
+
+function generateGroups() {
+      
+		 pots.forEach((pot,i) => {
+		 	var randomGroupPot = [];
+			 	pot.teams.forEach((team,j) => {
+						assignToGroup(team, randomGroupPot, i);
+	    		});
+    	 });
+
+		return groups;
+
+}
+
+
+function assignToGroup(team, randomGroupPot, currentPot){
+
+        var randomNumber = Math.floor(Math.random() * 8);
+ 		var a = randomGroupPot.indexOf(randomNumber);
+
+ 		//Make sure Russia is always in group A
+ 		if(team.teamName == "Russia"){
+ 			team.hostTeam = true ;
+ 			var currentGroup = groups[groupKeys[0]].teams;
+ 			currentGroup.push(team);
+ 			randomGroupPot.push(0);
+            return;
+ 		}
+
+        // Already used that pot, try again
+        if (a > -1){
+        	// console.log('Already used that group. Pick another.', randomNumber)
+            return assignToGroup(team, randomGroupPot, currentPot);
+        }
+
+        var currentGroup = groups[groupKeys[randomNumber]].teams;
+
+        // Only one continent allowed per group (except EU which is allowed two)
+        var EUTeams = currentGroup.filter(function(groupTeam) {
+            return groupTeam.cont === 'Europe';
+        });
+
+        //The clash only occurs when France is in a group that contains a EU country from pot 1. We need to prevent that.
+        if (team.europeanException === 'europeanException' && EUTeams.length === 1) {
+        //console.log('Already 2 EU teams. Pick again', EUTeams)
+            return assignToGroup(team, randomGroupPot, currentPot);
+        }
+
+        // Only one continent allowed per group (except EU which is allowed two)
+        var hasSameContinent = currentGroup.some(function(groupTeam) {
+            if (groupTeam.cont === 'Europe')
+            return false;
+            return (groupTeam.cont === team.cont);
+        });
+
+        if (hasSameContinent) {
+             console.log('same continent. Pick again',team.teamName);
+            return assignToGroup(team, randomGroupPot, currentPot);
+        }
+
+        if(a == -1){
+            currentGroup.push(team);
+            randomGroupPot.push(randomNumber);
+            //Push number in array to check which groups are filled
+        }
+ }
+
 
 
 function init(){
@@ -126,31 +203,10 @@ function init(){
 
 function buildView(newObj){
 	//populatePots(newObj.pots)
-	shufflePots();
 	fadeInTableBGs();
 	populateTeamFields();
 
 	document.querySelector('.gv-start-button').addEventListener('click', function(){ animateDraw(newObj) });
-	
-
-	
-}
-
-
-function shufflePots(){
-
-	Array.from(document.querySelectorAll('.gv-pot-div')).forEach((el) => {
-		let childArr = [];
-		Array.from(el.children).forEach((child) => {
-			if(child.tagName == "span" || child.tagName == "SPAN"){
-				childArr.push(child);
-			}
-		})	
-		childArr.map((child, k) => {
-			el.appendChild(el.children[Math.random() * k | 0]);
-		})
-	});
-
 
 }
 
@@ -199,226 +255,11 @@ function compileHTML(newObj){
 }
 
 
-function formatData(data){
-	let newObj = {};
-	let teams = [];
-	var tArr = [
-		{"pot":"one", "assocArr": [], "shuffleArr": []},
-		{"pot":"two", "assocArr": [], "shuffleArr": []},
-		{"pot":"three", "assocArr": [], "shuffleArr": []},
-		{"pot":"four", "assocArr": [], "shuffleArr": []},
-	];
-	data.sheets.testTeams.map((team) => {
-		team.teamName = team.Team;
-		team.drawPot = team["Draw pot"];
-		team.fifaRank = team["october-rank"];
-		team.association = team.Association;
-		if(team.drawPot == 1) { team.seeded = true };
-		if(team.drawPot == 1 && team.teamName == "Russia") { team.hostTeam = true };
-
-		teams.push(team);
-	})
-
-	let pots = groupBy(teams, 'drawPot');
-    pots = sortByKeys(pots);
-    newObj.pots = pots;
-
-    let buckets = pots;
-    buckets.map((bucket,k) => {
 
 
-			if (bucket.sortOn == 1){
-				bucket.shuffleArr = shuffle(bucket.objArr); 	
-				bucket.shuffleArr = (changeFirstObj(bucket.shuffleArr, e => e.Team === 'Russia') )
-				bucket.objArr = (changeFirstObj(bucket.objArr, e => e.Team === 'Russia') )
-				bucket.firstPot = true;
-
-				tArr[0].shuffleArr = bucket.shuffleArr;
-
-				tArr[0].shuffleArr.map((o) => {
-					tArr[0].assocArr.push(o.association)
-				})
-			};
-
-			//if (bucket.sortOn == 2){
-			
-				// let newArr = arrayToBeSorted.filter(e => arrayToCompare.map(o => o.association).includes(function(e){return e.association != o.association}));
-
-				// console.log(newArr)
-
-				//let newArr = arrayToBeSorted.filter(e => !arrayToCompare.map(o => o.association).includes(e.association));
-
-				//var result = arrayToCompare.filter(e => !arrayToBeSorted.find(a => e.association === a.association));
-				//var result = _differenceBy(arrayToBeSorted, arrayToCompare, 'association');
-
-				//console.log(arrayToBeSorted,arrayToCompare,result)
-
-
-				
-			//}
-
-
-			// if (bucket.sortOn == 2){
-
-			// 	let bucketOne = buckets[0].shuffleArr;
-			// 	let tempArrTwo = [];
-			// 	let oddTeams = [];
-
-			// 	bucket.objArr.map((team,k) =>{
-
-			// 			if(team.association != bucketOne[k].association){
-			// 				tempArrTwo[k] = team;
-			// 			}
-
-			// 			if(team.association == bucketOne[k].association){
-			// 				team.oldSlot = k;
-			// 				var temp = {"association": team.association, "freeslot":true}
-			// 				tempArrTwo[k] = temp;
-			// 				oddTeams.push(team);
-			// 			}
-			// 	}) 
-
-			// 	if(oddTeams.length > 0){
-			// 		for(var i = 0; i < oddTeams.length; i++){
-					
-			// 			tempArrTwo.map((tt){
-			// 				if(tt.freeslot && tt.association != oddTeams[i].association){
-
-			// 				}
-			// 			})
-
-			// 		}
-			// 	}
-
-			// 	console.log(tempArrTwo, oddTeams)
-			// };
-
-			
-
-
-		})
-
-
-
-
-    var draw = setDrawData(pots)
-    newObj.drawArr = draw;
-	newObj.teams = teams;
-	newObj.buckets = buckets;
-
-	return newObj;
-
-}
-
-
-// pot.shuffleArr.map((t,n){
-// 					groupsOriginal[n][t.association] += 1;
-
-
-// 				})
-
-// 				pot.shuffleArr.map((t,n){
-// 					groupsOriginal[n][t.association] += 1;
-
-// 				})
-
-function setDrawData(pots){
-	let drawCount = groupsOriginal.length;
-
-		pots.map((pot,k) => {
-			pot.shuffleArr = shuffle(pot.objArr);
-			if (pot.sortOn == 1){ 
-				pot.shuffleArr = (changeFirstObj(pot.shuffleArr, e => e.Team === 'Russia') )
-				pot.objArr = (changeFirstObj(pot.objArr, e => e.Team === 'Russia') )
-				pot.firstPot = true;
-
-				Array.from(pot.shuffleArr).forEach((t,n) => {
-					groupsOriginal[n][t.association] += 1;
-				})
-			};
-
-
-			if (pot.sortOn == 2){ 
-				Array.from(pot.shuffleArr).forEach((t,n) => {
-					console.log(t.association)
-					groupsOriginal[n][t.association] += 1;
-				})
-			}	
-	
-			if (pot.sortOn != 1){ 
-				pot.hidePot = true;
-			}
-
-			populateGroups(pot.shuffleArr);
-			
-
-		})
-
-		groupsOriginal.sort(compareValues('strengthScore')); 
-
-		groupsOriginal.map((o,k) => {
-			if(k == 0){ o.strengthRating = "strongest"}
-			if(k > 0 && k < 3){ o.strengthRating = "strong"}
-			if(k > 2 && k < 5){ o.strengthRating = "balanced"}
-			if(k > 4 && k < 7){ o.strengthRating = "weak"}
-			if(k > 6){ o.strengthRating = "weakest"}
-		});
-
-		groupsOriginal.sort(compareValues('group'));
-
-	return groupsOriginal;	
-}
-
-
-
-function populateGroups(a){
-	var holdArr = [];
-
-	a.map((team,k) => {	
-		if(team.association != "UEFA" && team.drawPot != 1){
-			if(groupsOriginal[k][team.association] < 1){
-				groupsOriginal[k].teams[team.drawPot-1] = team;
-				groupsOriginal[k][team.association] += 1;
-			}
-			if(groupsOriginal[k][team.association] > 0){
-				holdArr.push(team)
-			}
-		}
-		if(team.association == "UEFA" && team.drawPot != 1){
-			if(groupsOriginal[k][team.association] < 2){
-				groupsOriginal[k].teams[team.drawPot-1] = team;
-				groupsOriginal[k][team.association] += 1;
-			}
-			if(groupsOriginal[k][team.association] > 1){
-				holdArr.push(team)
-			}
-		}
-
-		if  (team.drawPot == 1) {
-			groupsOriginal[k].teams[team.drawPot-1] = team;
-		}
-
-		// console.log(groupsOriginal[k])
-		
-
-		// groupsOriginal[k].teams[team.drawPot-1] = team;
-		groupsOriginal[k].strengthScore += Number(team.fifaRank);
-
-	})	
-
-	holdArr.map((team) => {
-		groupsOriginal.map((group,k) => {
-				console.log("continue here work out empty drawPot slot for each group and allocate team from holdArr", group[team.association], team)
-		})
-	})
-	
-
-
-	
-}
 
 function animateDraw(a){
-	
+
 //document.querySelector(".gv-pot-div-intro").classList.add("display-none");
 
 	Array.from(a.pots).forEach((pot,k) => {
@@ -439,7 +280,7 @@ function animateDraw(a){
 				}
 			})
 
-			animateTeams(pot.shuffleArr, groupAniTime);
+			animateTeams(pot, groupAniTime);
 
 		}, k * groupAniTime);
 
@@ -460,8 +301,13 @@ function animateDraw(a){
 }
 
 function animateTeams(a,groupAniTime){
-	const teamAniTime = groupAniTime / (Math.floor(a.length));
-	a.map((team,k) => {
+	document.querySelectorAll(".host-item").forEach((el) => {
+		el.classList.add("display-none");
+	});
+
+	const teamAniTime = groupAniTime / 8;
+	a.teams.map((team,k) => {
+
 		let currentTeamName = team.Team;
 		let nextTeamTime = setTimeout(function(){
 
@@ -485,18 +331,28 @@ function animateTeams(a,groupAniTime){
 
 		}, k * teamAniTime);
 
-		
-
 	})
 
-	document.querySelectorAll(".host-item").forEach((el) => {
-		el.classList.add("display-none");
-	});
+
+
+	let tables = Array.from(document.querySelectorAll('.gv-group-table'));
+
+
 
 
 	//fire this function after compiling html to size iframe correctly
 		
 }
+function assignStrength(k){
+	var strengthRating = "weak";
+			if(k == 0){ strengthRating = "strongest"}
+			if(k > 0 && k < 3){ strengthRating = "strong"}
+			if(k > 2 && k < 5){ strengthRating = "balanced"}
+			if(k > 5 && k < 7){ strengthRating = "weak"}
+			if(k == 7){ strengthRating = "weakest"}
+	return strengthRating;
+}
+	
 
 
 
