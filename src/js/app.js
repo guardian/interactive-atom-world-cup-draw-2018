@@ -15,10 +15,20 @@ import _remove from 'lodash.remove'
 const dataurl = "https://interactive.guim.co.uk/docsdata-test/1mINILM6lN7p0soJ2eHKEd08bW-0Hw3bpf3nhfng2jrA.json";
 
 const groupAniTime = 10;
+var compiledHTML;
+var pots;
+var globalData;
 
-var holdArr = [];
+var groups = {};
 
-var groups = {
+var groupKeys = ['groupA', 'groupB', 'groupC','groupD', 'groupE', 'groupF', 'groupG', 'groupH'];
+
+var compiledHTMLArr = [];
+
+
+function formatData(data){
+
+	groups = {
 		groupA: { groupName: 'Group A', teams: [], strengthScore:0, strengthRating: 'weak', firstGroup:true},
 		groupB: { groupName: 'Group B', teams: [], strengthScore:0, strengthRating: 'weak'},
 		groupC: { groupName: 'Group C', teams: [], strengthScore:0, strengthRating: 'weak'},
@@ -29,20 +39,16 @@ var groups = {
 		groupH: { groupName: 'Group H', teams: [], strengthScore:0, strengthRating: 'weak'}
 	};
 
-var groupKeys = ['groupA', 'groupB', 'groupC','groupD', 'groupE', 'groupF', 'groupG', 'groupH'];
-
-var pots;
-
-function formatData(data){
 	let newObj = {};
 	let teams = [];
+	pots = [];
 	
 	data.sheets.testTeams.map((team) => {
 		team.teamName = team.Team;
 		team.drawPot = team["Draw pot"];
 		team.fifaRank = team["october-rank"];
 		team.association = team.Association;
-		//if(team.cont == 'Europe'){ team.europeanException = 'europeanException' }
+		if(team.cont == 'Europe'){ team.europeanException = true}
 		if(team.drawPot == 1) { team.seeded = true };
 		if(team.drawPot == 1 && team.teamName == "Russia") { team.hostTeam = true };
 
@@ -62,6 +68,8 @@ function formatData(data){
     })
 
     let generatedGroups = generateGroups();
+
+	console.log(groups)
 
 	Object.keys(generatedGroups).forEach(key => {
 	    var s = 0;
@@ -103,8 +111,6 @@ function formatData(data){
 
 	});
 
-	console.log(generatedGroups)
-
     newObj.groups = generatedGroups;
 	newObj.pots = pots;
 
@@ -133,82 +139,120 @@ function generateGroups() {
 
 function assignToGroup(team, randomGroupPot, currentPot){
 
-        var randomNumber = Math.floor(Math.random() * 8);
- 		var a = randomGroupPot.indexOf(randomNumber);
+		var randomNumber = Math.floor(Math.random() * 8);
+		var a = randomGroupPot.indexOf(randomNumber);
+		
 
- 		//Make sure Russia is always in group A
- 		if(team.teamName == "Russia"){
- 			team.hostTeam = true ;
+		if(team.teamName == "Russia"){
  			var currentGroup = groups[groupKeys[0]].teams;
  			currentGroup.push(team);
  			randomGroupPot.push(0);
             return;
  		}
 
-        // Already used that pot, try again
-        if (a > -1){
+ 		if (a > -1){
         	// console.log('Already used that group. Pick another.', randomNumber)
             return assignToGroup(team, randomGroupPot, currentPot);
         }
 
-        var currentGroup = groups[groupKeys[randomNumber]].teams;
 
-        // Only one continent allowed per group (except EU which is allowed two)
+		var currentGroup = groups[groupKeys[randomNumber]].teams;
+       
+		// Only one continent allowed per group (except EU which is allowed two)
         var EUTeams = currentGroup.filter(function(groupTeam) {
             return groupTeam.cont === 'Europe';
         });
 
-        //The clash only occurs when France is in a group that contains a EU country from pot 1. We need to prevent that.
-        if (team.europeanException === 'europeanException' && EUTeams.length === 1) {
-        //console.log('Already 2 EU teams. Pick again', EUTeams)
-            return assignToGroup(team, randomGroupPot, currentPot);
+        if (team.cont === 'Europe' && EUTeams.length === 2) {
+        	try {
+        	//console.log('Cant add ',team.teamName,' Already 2 EU teams. Pick again ', EUTeams)
+            return assignToGroup(team, randomGroupPot, currentPot); 
+        	} catch (e) {    
+	    		reGenerateGroups();	
+	    	}
         }
 
-        // Only one continent allowed per group (except EU which is allowed two)
         var hasSameContinent = currentGroup.some(function(groupTeam) {
-            if (groupTeam.cont === 'Europe')
-            return false;
+            if (groupTeam.cont === 'Europe'){
+					return false;
+        		}
+                
             return (groupTeam.cont === team.cont);
         });
 
+
+
         if (hasSameContinent) {
-             console.log('same continent. Pick again',team.teamName);
-            return assignToGroup(team, randomGroupPot, currentPot);
+        	try {
+	    		//console.log('same continent. Pick again',team.teamName);
+	            return assignToGroup(team, randomGroupPot, currentPot);
+			} catch (e) {    
+	    		reGenerateGroups();		
+	    	}
+
+         	
         }
 
         if(a == -1){
-            currentGroup.push(team);
-            randomGroupPot.push(randomNumber);
+        	try {
+	            currentGroup.push(team);
+	            randomGroupPot.push(randomNumber);
+	        } catch (e) {    
+	    		reGenerateGroups();		
+	    	}
             //Push number in array to check which groups are filled
         }
+
  }
 
+
+function reGenerateGroups(){
+	groups = {
+		groupA: { groupName: 'Group A', teams: [], strengthScore:0, strengthRating: 'weak', firstGroup:true},
+		groupB: { groupName: 'Group B', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupC: { groupName: 'Group C', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupD: { groupName: 'Group D', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupE: { groupName: 'Group E', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupF: { groupName: 'Group F', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupG: { groupName: 'Group G', teams: [], strengthScore:0, strengthRating: 'weak'},
+		groupH: { groupName: 'Group H', teams: [], strengthScore:0, strengthRating: 'weak'}
+	};
+
+	generateGroups();
+}
 
 
 function init(){
 	xr.get(dataurl).then((resp) => {
 		let newObj = formatData(resp.data);
-		let compiledHTML = compileHTML(newObj);
+		compiledHTML = compileHTML(newObj);
 
 		document.querySelector(".gv-wrapper").innerHTML = compiledHTML;
 
 		let h = document.querySelector(".gv-wrapper").offsetHeight;
 
-		buildView(newObj);
+		document.querySelector('.gv-start-button').addEventListener('click', function(){ animateDraw(newObj) });
 
 		window.resize();
+
+		compiledHTMLArr.push(compiledHTML)
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		
+		
 		
 	})	
 }
 
-function buildView(newObj){
-	//populatePots(newObj.pots)
-	fadeInTableBGs();
-	populateTeamFields();
-
-	document.querySelector('.gv-start-button').addEventListener('click', function(){ animateDraw(newObj) });
-
-}
 
 
     
@@ -247,9 +291,6 @@ function compileHTML(newObj){
     );
 
     var newHTML = content(dataIn);
-
-    
-
     return newHTML;
 
 }
@@ -275,16 +316,16 @@ function animateDraw(a){
 					//document.querySelector(".gv-pot-header").innerHTML = "Seeding pot "+currentPotNum;
 				}
 
-				if(el.getAttribute("potRef") != currentPotNum){
-					el.classList.add("display-none");
-				}
+				// if(el.getAttribute("potRef") != currentPotNum){
+				// 	el.classList.add("display-none");
+				// }
 			})
 
 			animateTeams(pot, groupAniTime);
 
 		}, k * groupAniTime);
 
-    });
+   });
 
 
 	let drawDone = setTimeout(function(){
@@ -298,9 +339,36 @@ function animateDraw(a){
 		})	
 
 	}, 4*groupAniTime);
+
+	document.querySelector('.gv-start-button').removeEventListener('click', function(){ animateDraw(newObj) });
+
+	setTimeout(function(){
+		document.querySelector('.gv-start-button').innerHTML = "Draw again"; 
+
+		
+		//
+	}, 2000);
+
+	document.querySelector('.gv-start-button').addEventListener('click', function(){  reDraw() });
+}
+
+function reDraw(){
+		var randomSlot = Math.floor(Math.random() * compiledHTMLArr.length);
+		
+		var newHTMLStr = compiledHTMLArr[randomSlot];
+
+		console.log(randomSlot, compiledHTMLArr[randomSlot])
+
+		document.querySelector(".gv-wrapper").innerHTML = newHTMLStr;
+
+		document.querySelectorAll(".host-item").forEach((el) => {
+			el.classList.add("display-none");
+		});
+
 }
 
 function animateTeams(a,groupAniTime){
+
 	document.querySelectorAll(".host-item").forEach((el) => {
 		el.classList.add("display-none");
 	});
@@ -333,16 +401,11 @@ function animateTeams(a,groupAniTime){
 
 	})
 
-
-
 	let tables = Array.from(document.querySelectorAll('.gv-group-table'));
 
-
-
-
-	//fire this function after compiling html to size iframe correctly
-		
 }
+
+
 function assignStrength(k){
 	var strengthRating = "weak";
 			if(k == 0){ strengthRating = "strongest"}
