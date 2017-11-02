@@ -26,8 +26,42 @@ var groupKeys = ['groupA', 'groupB', 'groupC','groupD', 'groupE', 'groupF', 'gro
 var compiledHTMLArr = [];
 
 
-function formatData(data){
+function init(){
+	xr.get(dataurl).then((resp) => {
+		let newObj = formatData(resp.data, true);
+		compiledHTML = compileHTML(newObj);
 
+		document.querySelector(".gv-wrapper").innerHTML = compiledHTML;
+
+		let h = document.querySelector(".gv-wrapper").offsetHeight;
+
+		document.querySelector('.gv-start-button').addEventListener('click', function(){ animateDraw(newObj) });
+
+		window.resize();
+
+		// push different compiled HTML strings into array
+		// enables much faster reDraw() function
+		compiledHTMLArr.push(compiledHTML);
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		
+		
+		
+	})	
+}
+
+
+function formatData(data, firstRun){
+	console.log("run", firstRun)
 	groups = {
 		groupA: { groupName: 'Group A', teams: [], strengthScore:0, strengthRating: 'weak', firstGroup:true},
 		groupB: { groupName: 'Group B', teams: [], strengthScore:0, strengthRating: 'weak'},
@@ -50,7 +84,7 @@ function formatData(data){
 		team.association = team.Association;
 		if(team.cont == 'Europe'){ team.europeanException = true}
 		if(team.drawPot == 1) { team.seeded = true };
-		if(team.drawPot == 1 && team.teamName == "Russia") { team.hostTeam = true };
+		if(team.drawPot == 1 && team.teamName == "Russia" && firstRun) { team.hostTeam = true };
 
 		teams.push(team);
 
@@ -222,39 +256,6 @@ function reGenerateGroups(){
 }
 
 
-function init(){
-	xr.get(dataurl).then((resp) => {
-		let newObj = formatData(resp.data);
-		compiledHTML = compileHTML(newObj);
-
-		document.querySelector(".gv-wrapper").innerHTML = compiledHTML;
-
-		let h = document.querySelector(".gv-wrapper").offsetHeight;
-
-		document.querySelector('.gv-start-button').addEventListener('click', function(){ animateDraw(newObj) });
-
-		window.resize();
-
-		compiledHTMLArr.push(compiledHTML)
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		
-		
-		
-	})	
-}
-
-
-
     
 function fadeInTableBGs(){
 	 Array.from(document.querySelectorAll('.gv-group-table')).forEach(el => {
@@ -294,10 +295,6 @@ function compileHTML(newObj){
     return newHTML;
 
 }
-
-
-
-
 
 function animateDraw(a){
 
@@ -344,9 +341,6 @@ function animateDraw(a){
 
 	setTimeout(function(){
 		document.querySelector('.gv-start-button').innerHTML = "Draw again"; 
-
-		
-		//
 	}, 2000);
 
 	document.querySelector('.gv-start-button').addEventListener('click', function(){  reDraw() });
@@ -361,9 +355,9 @@ function reDraw(){
 
 		document.querySelector(".gv-wrapper").innerHTML = newHTMLStr;
 
-		document.querySelectorAll(".host-item").forEach((el) => {
+		setTimeout(function(){ document.querySelectorAll(".host-item").forEach((el) => {
 			el.classList.add("display-none");
-		});
+		}) }, 500 );
 
 }
 
