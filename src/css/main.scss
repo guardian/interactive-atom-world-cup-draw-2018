@@ -78,7 +78,7 @@ body{
 	height:100%;
 	margin-bottom: 48px;
 	min-height: 632px;
-	background-color: $neutral-6;
+	background-color: #FFF;
 	@include mq(embedFiveEighty){
 		min-height: 420px;
 	}
