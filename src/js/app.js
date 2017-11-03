@@ -6,7 +6,9 @@ import potTemplate from '../templates/potTemplate.html'
 import groupsAllTemplate from '../templates/groupsAllTemplate.html'
 import teamTemplate from '../templates/teamTemplate.html'
 
-import {groupBy, sortByKeys, shuffle, compareValues, changeFirstObj, dedupe } from './libs/arrayUtils'
+import { buildTourney } from './libs/tourneySim'
+
+import { groupBy, sortByKeys, shuffle, compareValues, changeFirstObj, dedupe } from './libs/arrayUtils'
 
 import _sortBy from 'lodash.sortby'
 
@@ -17,6 +19,7 @@ const dataurl = "https://interactive.guim.co.uk/docsdata-test/1mINILM6lN7p0soJ2e
 const groupAniTime = 10;
 var compiledHTML;
 var pots;
+var teams;
 var globalData;
 
 var groups = {};
@@ -24,7 +27,6 @@ var groups = {};
 var groupKeys = ['groupA', 'groupB', 'groupC','groupD', 'groupE', 'groupF', 'groupG', 'groupH'];
 
 var compiledHTMLArr = [];
-
 
 function init(){
 	xr.get(dataurl).then((resp) => {
@@ -61,7 +63,6 @@ function init(){
 
 
 function formatData(data, firstRun){
-	console.log("run", firstRun)
 	groups = {
 		groupA: { groupName: 'Group A', teams: [], strengthScore:0, strengthRating: 'weak', firstGroup:true},
 		groupB: { groupName: 'Group B', teams: [], strengthScore:0, strengthRating: 'weak'},
@@ -74,14 +75,17 @@ function formatData(data, firstRun){
 	};
 
 	let newObj = {};
-	let teams = [];
+	teams = [];
 	pots = [];
 	
-	data.sheets.testTeams.map((team) => {
+	data.sheets.testTeams.map((team, k) => {
 		team.teamName = team.Team;
 		team.drawPot = team["Draw pot"];
 		team.fifaRank = team["october-rank"];
+		team.pot = team["Draw pot"];
+		team.rank = team["october-rank"];
 		team.association = team.Association;
+		team.winning = "";
 		if(team.cont == 'Europe'){ team.europeanException = true}
 		if(team.drawPot == 1) { team.seeded = true };
 		if(team.drawPot == 1 && team.teamName == "Russia" && firstRun) { team.hostTeam = true };
@@ -89,6 +93,8 @@ function formatData(data, firstRun){
 		teams.push(team);
 
 	})
+
+
 
 	pots = groupBy(teams, 'drawPot');
     pots = sortByKeys(pots);
@@ -103,7 +109,6 @@ function formatData(data, firstRun){
 
     let generatedGroups = generateGroups();
 
-	console.log(groups)
 
 	Object.keys(generatedGroups).forEach(key => {
 	    var s = 0;
@@ -166,7 +171,9 @@ function generateGroups() {
 	    		});
     	 });
 
-		return groups;
+		var rankedGroups = rankGroups(groups);
+
+		return rankedGroups;
 
 }
 
@@ -352,8 +359,6 @@ function reDraw(){
 		
 		var newHTMLStr = compiledHTMLArr[randomSlot];
 
-		console.log(randomSlot, compiledHTMLArr[randomSlot])
-
 		document.querySelector(".gv-wrapper").innerHTML = newHTMLStr;
 
 		setTimeout(function(){ document.querySelectorAll(".host-item").forEach((el) => {
@@ -411,6 +416,55 @@ function assignStrength(k){
 	return strengthRating;
 }
 	
+
+function rankGroups(newGroups){
+	
+    //Clear winners for new draw
+		teams.forEach((team,i) => {
+			 team.winner = "";
+		     team.groupStatus = "";
+		     team.roundOf16Status = "";
+		     team.quarterFinalStatus = "";
+		     team.semiFinalStatus = "";
+		})
+
+		for (var key in newGroups) {
+		    if (newGroups.hasOwnProperty(key)) {
+		   
+		        var group = newGroups[key];
+
+		        var randomUpset = Math.random();
+
+				       if(randomUpset <= 0.1875){
+				       
+				        var orderedGroup = shuffle(group.teams)
+					        orderedGroup[0].winner = "winner";
+					        orderedGroup[0].groupStatus = "Winner of " + group.groupName;
+					        orderedGroup[1].winner = "winner";
+					        orderedGroup[1].groupStatus = "Runner-up " + group.groupName;
+					        group.teamsOrdered = orderedGroup;
+					      // console.log("randomUpset", orderedGroup)   
+
+				      	} else {
+					        var orderedGroup = group.teams.slice().sort(function(a,b){ return a.rank-b.rank });
+					        orderedGroup[0].winner = "winner";
+					        orderedGroup[0].groupStatus = "Winner of " + group.groupName;
+					        orderedGroup[1].winner = "winner";
+					        orderedGroup[1].groupStatus = "Runner-up " + group.groupName;
+					        group.teamsOrdered = orderedGroup;
+
+				      }
+				//console.log(group)
+		    }
+		}
+
+	console.log(buildTourney(teams,groups))	
+
+    return groups;
+
+}
+
+
 
 
 
