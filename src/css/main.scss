@@ -359,7 +359,7 @@ body{
 
 
 
-.gv-start-button{
+.gv-start-button, .gv-start-knockout{
 	width: 180px;
 	height:36px;
 	padding-top:12px;
@@ -374,11 +374,11 @@ body{
 	margin-left: calc(50% - 90px);
 	cursor:pointer;
 
-	&.animated{
-		-moz-animation:  colorchange 6s infinite;
-		-webkit-animation:  colorchange 6s infinite;
-		animation:  colorchange 6s infinite;
-	}
+		&.animated{
+			-moz-animation:  colorchange 6s infinite;
+			-webkit-animation:  colorchange 6s infinite;
+			animation:  colorchange 6s infinite;
+		}
 }
 
 

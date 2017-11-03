@@ -28,4 +28,59 @@ Belgium, Poland, France and Russia (host)
 </div>
 
 
+<div class="gv-rounds-wrapper r16">
+R16s------------------------------------
+	{{#each roundOf16}}
+	<div class="gv-group-round " data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
+		
+			{{>roundTeam}}
+
+	</div>
+	{{/each}}
+------------------------------------
+</div>
+
+
+
+<div class="gv-rounds-wrapper qf">
+QFs------------------------------------
+	{{#each quarter}}
+	<div class="gv-group-round " data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
+		
+			{{>roundTeam}}
+
+	</div>
+	{{/each}}
+------------------------------------
+</div>
+
+<div class="gv-rounds-wrapper sf">
+SFs------------------------------------
+	{{#each semi}}
+	<div class="gv-group-round " data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
+		
+			{{>roundTeam}}
+
+	</div>
+	{{/each}}
+------------------------------------
+</div>
+
+
+<div class="gv-rounds-wrapper sf">
+Final------------------------------------
+	
+	<div class="gv-group-round " data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
+			{{finalist.Team}} v {{winner.Team}}
+
+	</div>
+
+------------------------------------
+</div>
+
+
+
+
+
+
 

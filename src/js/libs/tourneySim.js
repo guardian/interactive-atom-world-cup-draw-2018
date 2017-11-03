@@ -33,6 +33,7 @@ export function buildTourney(teams,groups) {
       f1: [], //winner s1 against winner s2
     };
     var winner;
+    var finalist;
 
 
 for (var key in roundOf16) {
@@ -169,9 +170,11 @@ for (var key in semiFinals) {
     var randomNumber = Math.random()*100;
     if(randomNumber >= chanceToWin){
       winner = final.f1[0];
+      finalist = final.f1[1];
       final.f1[0].winFinal = "winner";
     }else{
       winner = final.f1[1];
+      finalist = final.f1[0];
       final.f1[1].winFinal = "winner";
     }
 
@@ -181,6 +184,7 @@ for (var key in semiFinals) {
        "quarter" : quarterFinals,
        "semi" : semiFinals,
        "final" : final,
+       "finalist" : finalist,
        "winner": winner
     }
 

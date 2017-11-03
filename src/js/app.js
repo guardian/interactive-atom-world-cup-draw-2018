@@ -5,6 +5,8 @@ import mainTemplate from '../templates/main.html'
 import potTemplate from '../templates/potTemplate.html'
 import groupsAllTemplate from '../templates/groupsAllTemplate.html'
 import teamTemplate from '../templates/teamTemplate.html'
+import roundTeamTemplate from '../templates/roundTeamTemplate.html'
+import roundsTemplate from '../templates/roundsTemplate.html'
 
 import { buildTourney } from './libs/tourneySim'
 
@@ -95,7 +97,6 @@ function formatData(data, firstRun){
 	})
 
 
-
 	pots = groupBy(teams, 'drawPot');
     pots = sortByKeys(pots);
     
@@ -138,7 +139,6 @@ function formatData(data, firstRun){
 
 	Object.keys(generatedGroups).forEach(key => {
 	   
-	
 		strengthScores.map((n, k) => {
 			if(generatedGroups[key].strengthScore == n){
 				generatedGroups[key].groupRank = k; 
@@ -147,11 +147,22 @@ function formatData(data, firstRun){
 
 		})
 
-
 	});
 
+
+	var fullTourney = buildTourney(teams,generatedGroups);
+
+	newObj.roundOf16 = fullTourney.roundOf16;
+	newObj.quarter = fullTourney.quarter;
+	newObj.semi = fullTourney.semi;
+	newObj.final = fullTourney.final;
+	newObj.winner = fullTourney.winner;
+	newObj.finalist = fullTourney.finalist;
+	
     newObj.groups = generatedGroups;
 	newObj.pots = pots;
+
+	console.log(newObj)
 
 	return newObj;
 
@@ -289,7 +300,9 @@ function compileHTML(newObj){
 
     Handlebars.registerPartial({
         'team': teamTemplate,
-        'pot': potTemplate
+        'pot': potTemplate,
+        'roundTeam' : roundTeamTemplate,
+        'roundsTemplate' : roundsTemplate
     });
 
     var content = Handlebars.compile(
@@ -299,6 +312,7 @@ function compileHTML(newObj){
     );
 
     var newHTML = content(dataIn);
+
     return newHTML;
 
 }
@@ -457,8 +471,6 @@ function rankGroups(newGroups){
 				//console.log(group)
 		    }
 		}
-
-	console.log(buildTourney(teams,groups))	
 
     return groups;
 
