@@ -366,19 +366,55 @@ body{
 	margin: 12px 0 24px;
 	border-radius:1000px;
 	background-color: rgba($button, 0.8);
-
 	font-family: "Guardian Egyptian Web", Georgia, serif;
 	font-size: 20px;
 	font-weight:900;
 	text-align:center;
 	color:#222;
 	margin-left: calc(50% - 90px);
-
 	cursor:pointer;
+
+	&.animated{
+		-moz-animation:  colorchange 6s infinite;
+		-webkit-animation:  colorchange 6s infinite;
+		animation:  colorchange 6s infinite;
+	}
 }
+
+
+@keyframes colorchange
+    {
+      0%   {background: rgba($button, 1);}
+
+      50%  {background: rgba($button, 0.4);}
+  
+      100% {background: rgba($button, 1);}
+    }
+
+    @-webkit-keyframes colorchange /* Safari and Chrome - necessary duplicate */
+    {
+      0%   {background: rgba($button, 1);}
+
+      50%  {background: rgba($button, 0.4);}
+  
+      100% {background: rgba($button, 1);}
+    }
+
+    @-moz-keyframes colorchange /* Safari and Chrome - necessary duplicate */
+    {
+      0%   {background: rgba($button, 1);}
+
+      50%  {background: rgba($button, 0.4);}
+  
+      100% {background: rgba($button, 1);}
+    }
 
 .gv-start-button:hover{
 	background-color: rgba($button, 1);
+
+	-moz-animation:  none;
+	-webkit-animation:  none;
+	animation:  none;
 }
 
 .display-mobile{

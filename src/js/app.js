@@ -341,6 +341,7 @@ function animateDraw(a){
 
 	setTimeout(function(){
 		document.querySelector('.gv-start-button').innerHTML = "Draw again"; 
+		document.querySelector('.gv-start-button').classList.remove('animated'); 
 	}, 2000);
 
 	document.querySelector('.gv-start-button').addEventListener('click', function(){  reDraw() });
