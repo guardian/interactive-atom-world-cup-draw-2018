@@ -67,7 +67,7 @@ $button: $accent-color;
 }
 
 body{
-	background-color:#FFF;
+	background-color:#FFF !important;
 }
 
 .gv-pot-header, .gv-pot-div-intro{
@@ -76,7 +76,7 @@ body{
 
 .gv-wrapper{
 	height:100%;
-	margin-bottom: 48px;
+	margin-bottom: 64px;
 	min-height: 632px;
 	background-color: #FFF;
 	@include mq(embedFiveEighty){
