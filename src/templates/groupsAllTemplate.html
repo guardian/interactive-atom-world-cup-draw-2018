@@ -9,7 +9,7 @@ Belgium, Poland, France and Russia (host)
 
 
 
-<div class="gv-table-wrapper ">
+<div class="gv-table-wrapper drawn-group">
 
 {{#each groups}}
 	<div class="gv-group-table" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
@@ -28,54 +28,70 @@ Belgium, Poland, France and Russia (host)
 </div>
 
 
-<div class="gv-rounds-wrapper r16">
-R16s------------------------------------
+<div class="gv-table-wrapper results-group display-none">
+
+{{#each groups}}
+	<div class="gv-group-table" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
+
+		<div class="gv-team-row header"><h4>{{groupName}}</h4>
+		
+	</div>
+
+		{{>orderedTeam}}
+
+	</div>
+{{/each}}
+
+</div>
+
+
+<div class="gv-rounds-wrapper r16 display-none">
+<h4>Round of 16</h4>
 	{{#each roundOf16}}
-	<div class="gv-group-round " data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
+	<div class="gv-group-round r16" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
 		
 			{{>roundTeam}}
 
 	</div>
 	{{/each}}
-------------------------------------
+
 </div>
 
 
 
-<div class="gv-rounds-wrapper qf">
-QFs------------------------------------
+<div class="gv-rounds-wrapper qf display-none">
+<h4>Quarter finals</h4>
 	{{#each quarter}}
-	<div class="gv-group-round " data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
+	<div class="gv-group-round qf" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
 		
 			{{>roundTeam}}
 
 	</div>
 	{{/each}}
-------------------------------------
+
 </div>
 
-<div class="gv-rounds-wrapper sf">
-SFs------------------------------------
+<div class="gv-rounds-wrapper sf display-none">
+<h4>Semi finals</h4>
 	{{#each semi}}
-	<div class="gv-group-round " data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
+	<div class="gv-group-round sf" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
 		
 			{{>roundTeam}}
 
 	</div>
 	{{/each}}
-------------------------------------
+
 </div>
 
 
-<div class="gv-rounds-wrapper sf">
-Final------------------------------------
+<div class="gv-rounds-wrapper final display-none">
+<h4>Final</h4>
 	
-	<div class="gv-group-round " data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
+	<div class="gv-group-round final" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
 			{{finalist.Team}} v {{winner.Team}}
 
 	</div>
 
-------------------------------------
 </div>
 
 

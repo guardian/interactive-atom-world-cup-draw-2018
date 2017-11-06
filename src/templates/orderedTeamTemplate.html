@@ -1,23 +1,7 @@
-{{#each teams}}​ 	
-      	  <div class="gv-team-row {{#if seeded}}no-border{{/if}} gv-group-draw" data-team="{{teamName}}">
-      	  	{{#if hostTeam}}
-      	  	<span class="gv-team-text host-item">Russia <span class="display-none-mobile" style="color:#FFF; font-size:10px;">HOST</span></span>
-      	  	<span class="gv-rank-text display-mobile host-item" >(FIFA ranking 65)  <span class="display-mobile" style="color:#FFF; font-size:10px;">HOST</span></span> 
-      	  	<span class="gv-rank-text display-none-mobile host-item" style="position:absolute; right: 12px; text-align:right;">65</span>    
-      	  	{{/if}}
+{{#each teamsOrdered}}​ 	
+      	  <div class="gv-team-row gv-group-draw {{groupClass}} " data-team="{{teamName}}">
       	  	<span class="gv-team-text display-none" data-association="{{association}}">{{teamName}}</span>
-      	  	<span class="gv-rank-text display-mobile  display-none" >({{fifaRank}})</span> 
-      	  	<span class="gv-rank-text display-none-mobile  display-none" style="position:absolute; right: 12px; text-align:right;">{{fifaRank}}</span>
+      	  	<span class="gv-rank-text display-mobile  display-none" >{{#if groupClass}}(Q){{/if}}</span> 
+      	  	<span class="gv-rank-text display-none-mobile  display-none" style="position:absolute; right: 12px; text-align:right;">{{#if groupClass}}Q{{/if}}</span>
       	  </div>
 {{/each}}
-
-
-
-<!-- {{#each teamsOrdered}}​  
-              <div class="gv-team-row {{#if seeded}}no-border{{/if}}  gv-group-result display-none" data-team="{{teamName}}">
-             
-                  <span class="gv-team-text " data-association="{{association}}">{{teamName}}</span>
-                  <span class="gv-rank-text display-mobile " >(Q)</span> 
-                  <span class="gv-rank-text display-none-mobile " style="position:absolute; right: 12px; text-align:right;">Q</span>
-              </div>
-{{/each}} -->

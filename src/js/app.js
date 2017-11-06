@@ -5,6 +5,7 @@ import mainTemplate from '../templates/main.html'
 import potTemplate from '../templates/potTemplate.html'
 import groupsAllTemplate from '../templates/groupsAllTemplate.html'
 import teamTemplate from '../templates/teamTemplate.html'
+import orderedTeamTemplate from '../templates/orderedTeamTemplate.html'
 import roundTeamTemplate from '../templates/roundTeamTemplate.html'
 import roundsTemplate from '../templates/roundsTemplate.html'
 
@@ -41,6 +42,8 @@ function init(){
 
 		document.querySelector('.gv-start-button').addEventListener('click', function(){ animateDraw(newObj) });
 
+		document.querySelector('.gv-start-knockout').addEventListener('click', function(){ showRoadToFinal() });
+
 		window.resize();
 
 		// push different compiled HTML strings into array
@@ -61,6 +64,18 @@ function init(){
 		
 		
 	})	
+}
+
+
+function showRoadToFinal(){
+	document.querySelector('.drawn-group').classList.add('display-none');
+	document.querySelector('.results-group').classList.remove('display-none');
+
+	Array.from(document.querySelectorAll('.gv-rounds-wrapper')).forEach((el) => {
+		el.classList.remove("display-none");		
+	})
+
+	window.resize();
 }
 
 
@@ -299,6 +314,7 @@ function compileHTML(newObj){
     });
 
     Handlebars.registerPartial({
+    	'orderedTeam' : orderedTeamTemplate,
         'team': teamTemplate,
         'pot': potTemplate,
         'roundTeam' : roundTeamTemplate,
@@ -369,15 +385,20 @@ function animateDraw(a){
 }
 
 function reDraw(){
+
 		var randomSlot = Math.floor(Math.random() * compiledHTMLArr.length);
 		
 		var newHTMLStr = compiledHTMLArr[randomSlot];
+
+		document.querySelector(".gv-wrapper").innerHTML = " ";
 
 		document.querySelector(".gv-wrapper").innerHTML = newHTMLStr;
 
 		setTimeout(function(){ document.querySelectorAll(".host-item").forEach((el) => {
 			el.classList.add("display-none");
 		}) }, 500 );
+
+		window.resize();
 
 }
 
@@ -454,18 +475,23 @@ function rankGroups(newGroups){
 				        var orderedGroup = shuffle(group.teams)
 					        orderedGroup[0].winner = "winner";
 					        orderedGroup[0].groupStatus = "Winner of " + group.groupName;
+					        orderedGroup[0].groupClass = "winner";
 					        orderedGroup[1].winner = "winner";
 					        orderedGroup[1].groupStatus = "Runner-up " + group.groupName;
+					        orderedGroup[1].groupClass = "runner-up";
 					        group.teamsOrdered = orderedGroup;
-					      // console.log("randomUpset", orderedGroup)   
+					      console.log("randomUpset", orderedGroup)   
 
 				      	} else {
 					        var orderedGroup = group.teams.slice().sort(function(a,b){ return a.rank-b.rank });
 					        orderedGroup[0].winner = "winner";
 					        orderedGroup[0].groupStatus = "Winner of " + group.groupName;
+					        orderedGroup[0].groupClass = "winner";
 					        orderedGroup[1].winner = "winner";
 					        orderedGroup[1].groupStatus = "Runner-up " + group.groupName;
+					        orderedGroup[1].groupClass = "runner-up";
 					        group.teamsOrdered = orderedGroup;
+					       console.log("no randomUpset", orderedGroup)   
 
 				      }
 				//console.log(group)

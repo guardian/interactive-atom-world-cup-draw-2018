@@ -4,6 +4,7 @@
 // Uncomment for embeds
 @import "embed";
 @import "potStyles";
+@import "knockOutStyles";
 
 // Uncomment for full screen (including immersive article main media)
 //@import "fullscreen";
@@ -283,6 +284,10 @@ body{
 				font-size: 16px;
 				
 			}
+		}
+
+		&.winner{
+			border:none;
 		}
 
 }

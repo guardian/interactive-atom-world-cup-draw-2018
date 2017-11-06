@@ -1,11 +1,11 @@
 export function buildTourney(teams,groups) {
-
     teams.forEach((team,i) => {
       team.winRoundOf16 = "";
       team.winSemiFinal = "";
       team.winQuarterFinal = "";
       team.winFinal = "";
     });
+
     var roundOf16 = {
       r1: {name: "round of 16: match 1", teams: [groups.groupA.teamsOrdered[0], groups.groupB.teamsOrdered[1]]}, //winner group A against second group B
       r2: {name: "round of 16: match 2", teams: [groups.groupA.teamsOrdered[1], groups.groupB.teamsOrdered[0]]}, //winner group B against second group A
@@ -89,17 +89,14 @@ for (var key in roundOf16) {
         }
       }
 
-   // $.each(roundOf16, function(index, round) {
-
-
-
    }
+
+   
 
 }
      
-    // });
 
-    for (var key in quarterFinals) {
+for (var key in quarterFinals) {
     
     if (quarterFinals.hasOwnProperty(key)) {
        
@@ -135,7 +132,10 @@ for (var key in roundOf16) {
           quarterFinal.teams[1].quarterFinalStatus = "Winner of " + quarterFinal.name;
         }
       }
+
     }
+
+    
 }
 
 
@@ -161,8 +161,9 @@ for (var key in semiFinals) {
         semiFinal.teams[1].winSemiFinal = "winner";
         semiFinal.teams[1].semiFinalStatus = "Winner of " + semiFinal.name;
       }
+
     }
-  }
+}
 
     //Deciding who wins the final
     var differenceRank = final.f1[0].rank - final.f1[1].rank;

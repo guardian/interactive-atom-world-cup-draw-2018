@@ -1,0 +1,41 @@
+
+
+.gv-group-round{
+	height: 80px;	
+	display:block;
+	font-family:"Guardian Text Sans Web", Helvetica, Helvetica, Arial, sans-serif;
+	font-size:14px;
+	line-height: 22px;
+	width: 100%;
+
+	&.r16{
+		@include mq(embedFiveEighty){
+			display: inline-block;
+			width: calc(25% - 20px)
+		}
+
+	}
+
+	&.qf{
+		@include mq(embedFiveEighty){
+			display: inline-block;
+			width: calc(25% - 20px)
+		}
+	}
+
+	&.qf{
+		@include mq(embedFiveEighty){
+			display: inline-block;
+			width: calc(50% - 20px)
+		}
+	}
+
+}
+
+.match-title{
+	width: 100%;
+	font-weight:bold;
+
+}
+
+
