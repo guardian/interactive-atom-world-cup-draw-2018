@@ -79,6 +79,8 @@ function formatData(data, firstRun){
 	
 	data.sheets.testTeams.map((team) => {
 		team.teamName = team.Team;
+		if (team.teamShort){ team.teamShortName = team.teamShort }
+		if (!team.teamShort){ team.teamShortName = team.teamName }
 		team.drawPot = team["Draw pot"];
 		team.fifaRank = team["october-rank"];
 		team.association = team.Association;

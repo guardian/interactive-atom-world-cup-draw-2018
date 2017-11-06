@@ -5,8 +5,9 @@
       	  	<span class="gv-rank-text display-mobile host-item" >(FIFA ranking 65)  <span class="display-mobile" style="color:#767676; font-size:10px;">HOST</span></span>
       	  	<span class="gv-rank-text display-none-mobile host-item" style="position:absolute; right: 12px; text-align:right;">65</span>
       	  	{{/if}}
-      	  	<span class="gv-team-text display-none" data-association="{{association}}">{{teamName}}</span>
-      	  	<span class="gv-rank-text display-mobile  display-none" >({{fifaRank}})</span>
+                  <span class="gv-team-text display-mobile display-none" data-association="{{association}}">{{teamShortName}}</span>
+                  <span class="gv-rank-text display-mobile display-none" >({{fifaRank}})</span>
+      	  	<span class="gv-team-text display-none-mobile display-none" data-association="{{association}}">{{teamName}}</span>
       	  	<span class="gv-rank-text display-none-mobile  display-none" style="position:absolute; right: 12px; text-align:right;">{{fifaRank}}</span>
       	  </div>
 {{/each}}
