@@ -4,9 +4,8 @@
 	padding-bottom:12px;
 }
 
-
 .gv-pot-header{
-	margin: 0;
+	margin:0 10px;
 	width:auto;
 	font-family: "Guardian Text Sans Web", Helvetica, Arial, sans-serif !important;
     font-size: 16px;
@@ -14,6 +13,7 @@
 
 	@include mq(embedFiveEighty){
 		font-size: 16px;
+		margin: 0;
 	}
 }
 
@@ -21,9 +21,6 @@
 	display:inline-block;
 	text-align:left;
 	padding-right:12px;
-	
-	
-
 }
 
 .gv-pot-div-intro, .gv-pot-item{
@@ -31,8 +28,14 @@
 	font-size:14px;
 	line-height: 22px;
 	height:auto;
+}
 
-
+.gv-pot-div-intro{
+	margin:0 10px;
+	
+	@include mq(embedFiveEighty){
+		margin: 0;
+	}
 }
 
 .fifty-pc{

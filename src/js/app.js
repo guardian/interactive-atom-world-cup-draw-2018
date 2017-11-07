@@ -97,6 +97,8 @@ function formatData(data, firstRun){
 	
 	data.sheets.testTeams.map((team, k) => {
 		team.teamName = team.Team;
+		if (team.teamShort){ team.teamShortName = team.teamShort }
+		if (!team.teamShort){ team.teamShortName = team.teamName }
 		team.drawPot = team["Draw pot"];
 		team.fifaRank = team["october-rank"];
 		team.pot = team["Draw pot"];
@@ -334,6 +336,9 @@ function compileHTML(newObj){
 }
 
 function animateDraw(a){
+	document.querySelectorAll(".host-item").forEach((el) => {
+		el.classList.add("display-none");
+	});
 
 //document.querySelector(".gv-pot-div-intro").classList.add("display-none");
 
@@ -385,6 +390,11 @@ function animateDraw(a){
 }
 
 function reDraw(){
+
+		document.querySelectorAll(".host-item").forEach((el) => {
+			el.classList.add("display-none");
+		});
+
 
 		var randomSlot = Math.floor(Math.random() * compiledHTMLArr.length);
 		
