@@ -88,10 +88,11 @@ for (var key in roundOf16) {
           round.teams[1].roundOf16Status = "Won " + round.name;
         }
       }
-
+      round.homeTeam = round.teams[0];
+      round.awayTeam = round.teams[1];
    }
 
-   
+
 
 }
      
@@ -114,6 +115,7 @@ for (var key in quarterFinals) {
         //Winners of q1 and q2 will go to s1
         if(index == "q1" || index == "q3"){
           semiFinals.s1.teams.push(quarterFinal.teams[0]);
+
           quarterFinal.teams[0].winQuarterFinal = "winner";
           quarterFinal.teams[0].quarterFinalStatus = "Winner of " + quarterFinal.name;
         } else{
@@ -134,13 +136,14 @@ for (var key in quarterFinals) {
       }
 
     }
-
+    quarterFinal.homeTeam = quarterFinal.teams[0];
+    quarterFinal.awayTeam = quarterFinal.teams[1];
     
 }
 
 
 
-// //Deciding who goest to final
+// //Deciding who goes to final
 for (var key in semiFinals) {
     
   if (semiFinals.hasOwnProperty(key)) {
@@ -161,6 +164,11 @@ for (var key in semiFinals) {
         semiFinal.teams[1].winSemiFinal = "winner";
         semiFinal.teams[1].semiFinalStatus = "Winner of " + semiFinal.name;
       }
+
+      semiFinal.homeTeam = semiFinal.teams[0];
+      semiFinal.awayTeam = semiFinal.teams[1];
+
+      console.log(semiFinal)
 
     }
 }

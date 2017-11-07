@@ -1,12 +1,9 @@
 <h5 class="gv-pot-header">Top seeds</h5>
 
 <div class="gv-pot-div-intro">
-Germany, Brazil, Portugal, Argentina,
-Belgium, Poland, France and Russia (host)
-
+	Germany, Brazil, Portugal, Argentina,
+	Belgium, Poland, France and Russia (host)
 </div>
-
-
 
 
 <div class="gv-table-wrapper drawn-group">
@@ -18,11 +15,11 @@ Belgium, Poland, France and Russia (host)
 		{{#if firstGroup}}
 		<div class="gv-table-minor-header display-none-mobile">FIFA ranking</div>
 		{{/if}}
-	</div>
 
-		{{>team}}
+		</div>
+			{{>team}}
+		</div>
 
-	</div>
 {{/each}}
 
 </div>
@@ -31,15 +28,13 @@ Belgium, Poland, France and Russia (host)
 <div class="gv-table-wrapper results-group display-none">
 
 {{#each groups}}
-	<div class="gv-group-table" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
 
-		<div class="gv-team-row header"><h4>{{groupName}}</h4>
-		
+	<div class="gv-group-table" data-strength-score="{{strengthScore}}" data-strength="weak">
+		<div class="gv-team-row header"><h4>{{groupName}}</h4>	
 	</div>
-
 		{{>orderedTeam}}
-
 	</div>
+
 {{/each}}
 
 </div>
