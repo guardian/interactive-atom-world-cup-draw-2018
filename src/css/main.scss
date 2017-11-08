@@ -76,11 +76,12 @@ body{
 
 .gv-wrapper{
 	height:100%;
-	margin-bottom: 64px;
+	margin-bottom: 12px;
 	min-height: 632px;
 	background-color: #FFF;
 	@include mq(embedFiveEighty){
 		min-height: 420px;
+		margin-bottom: 64px;
 	}
 
 	@include mq(embedSevenEighty){
@@ -212,8 +213,10 @@ body{
 .gv-team-text{
 	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
 	font-size:12px;
-	@include mq(embedThreeEighty){
+	float: left;
+	@include mq(embedThreeSixty){
 		font-size: 14px;
+		float: none;
 	}
 
 }
@@ -221,10 +224,12 @@ body{
 .gv-rank-text{
 	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
 	font-size:10px;
-	margin: 0 5px 0 0;
-	@include mq(embedThreeEighty){
+	margin: 1px 5px 0 1px;
+	float: left;
+	@include mq(embedThreeSixty){
 		font-size: 12px;
 		margin: 0 5px 0 0;
+		float: none;
 	}
 
 }

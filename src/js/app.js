@@ -308,9 +308,7 @@ function compileHTML(newObj){
 }
 
 function animateDraw(a){
-	document.querySelectorAll(".host-item").forEach((el) => {
-		el.classList.add("display-none");
-	});
+	
 
 //document.querySelector(".gv-pot-div-intro").classList.add("display-none");
 
@@ -336,6 +334,7 @@ function animateDraw(a){
 
 		}, k * groupAniTime);
 
+
    });
 
 
@@ -360,6 +359,12 @@ function animateDraw(a){
 			el.innerHTML = "Draw again"; 
 			el.classList.remove('animated');
 			el.addEventListener('click', function(){  reDraw() }); 
+		})
+	}, 2000);
+
+	setTimeout(function(){
+		document.querySelectorAll(".host-item").forEach((el) => {
+			el.classList.add("display-none");
 		})
 	}, 2000);
 
