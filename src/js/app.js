@@ -25,6 +25,8 @@ var groupKeys = ['groupA', 'groupB', 'groupC','groupD', 'groupE', 'groupF', 'gro
 
 var compiledHTMLArr = [];
 
+var startButtons;
+
 
 function init(){
 	xr.get(dataurl).then((resp) => {
@@ -35,7 +37,14 @@ function init(){
 
 		let h = document.querySelector(".gv-wrapper").offsetHeight;
 
-		document.querySelector('.gv-start-button').addEventListener('click', function(){ animateDraw(newObj) });
+		startButtons = document.querySelectorAll('.gv-start-button');
+
+		console.log(startButtons)
+
+
+		startButtons.forEach((el) => {
+			 el.addEventListener('click', function(){ animateDraw(newObj) });
+		})
 
 		window.resize();
 
@@ -342,14 +351,18 @@ function animateDraw(a){
 
 	}, 4*groupAniTime);
 
-	document.querySelector('.gv-start-button').removeEventListener('click', function(){ animateDraw(newObj) });
+	startButtons.forEach((el) => {
+			 el.removeEventListener('click', function(){ animateDraw(newObj) });
+		})
 
 	setTimeout(function(){
-		document.querySelector('.gv-start-button').innerHTML = "Draw again"; 
-		document.querySelector('.gv-start-button').classList.remove('animated'); 
+		startButtons.forEach((el) => {
+			el.innerHTML = "Draw again"; 
+			el.classList.remove('animated');
+			el.addEventListener('click', function(){  reDraw() }); 
+		})
 	}, 2000);
 
-	document.querySelector('.gv-start-button').addEventListener('click', function(){  reDraw() });
 }
 
 function reDraw(){
