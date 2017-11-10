@@ -375,6 +375,10 @@ function reDraw(){
 			el.classList.add("display-none");
 		});
 
+		document.querySelectorAll(".none-header-team-row").forEach((el) => {
+			el.classList.add("display-none");
+		});
+
 		var randomSlot = Math.floor(Math.random() * compiledHTMLArr.length);
 		
 		var newHTMLStr = compiledHTMLArr[randomSlot];
@@ -383,9 +387,20 @@ function reDraw(){
 
 		document.querySelector(".gv-wrapper").innerHTML = newHTMLStr;
 
-		setTimeout(function(){ document.querySelectorAll(".host-item").forEach((el) => {
-			el.classList.add("display-none");
-		}) }, 500 );
+		setTimeout(function(){ 
+			document.querySelectorAll(".host-item").forEach((el) => {
+				el.classList.add("display-none");
+			}) 
+		}, 500 );
+
+		document.querySelectorAll(".none-header-team-row").forEach((el,k) => {
+			var timeOut = k * 1000;
+			console.log(timeOut)
+				setTimeout(function(){
+					el.classList.remove("display-none");
+				}, timeOut);
+
+		});
 
 }
 
