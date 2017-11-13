@@ -3,7 +3,6 @@
 
 // Uncomment for embeds
 @import "embed";
-@import "potStyles";
 
 // Uncomment for full screen (including immersive article main media)
 //@import "fullscreen";
@@ -59,6 +58,9 @@ $weakest: #eaeaea;
 
 $button: $accent-color;
 
+
+@import "potStyles";
+@import "roundStyles";
 
 .element-atom,
 .interactive-atom {

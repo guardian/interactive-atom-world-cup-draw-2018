@@ -43,7 +43,6 @@ for (var key in roundOf16) {
        
       var round = roundOf16[key];
       var index = key;
-
       var differenceRank = round.teams[0].rank - round.teams[1].rank;
 
       var chanceToWin = calculateChanceToWin(differenceRank)
@@ -93,7 +92,7 @@ for (var key in roundOf16) {
       round.awayTeam = round.teams[1];
    }
 
-
+console.log(round)
 
 }
      
@@ -137,6 +136,7 @@ for (var key in quarterFinals) {
       }
 
     }
+
     quarterFinal.homeTeam = quarterFinal.teams[0];
     quarterFinal.awayTeam = quarterFinal.teams[1];
     
@@ -156,20 +156,18 @@ for (var key in semiFinals) {
 
       var randomNumber = Math.random()*100;
 
-      if(randomNumber >= chanceToWin){
-        final.f1.push(semiFinal.teams[0]);
-        semiFinal.teams[0].winSemiFinal = "winner";
-        semiFinal.teams[0].semiFinalStatus = "Winner of " + semiFinal.name;
-      }else{
-        final.f1.push(semiFinal.teams[1]);
-        semiFinal.teams[1].winSemiFinal = "winner";
-        semiFinal.teams[1].semiFinalStatus = "Winner of " + semiFinal.name;
-      }
+        if(randomNumber >= chanceToWin){
+          final.f1.push(semiFinal.teams[0]);
+          semiFinal.teams[0].winSemiFinal = "winner";
+          semiFinal.teams[0].semiFinalStatus = "Winner of " + semiFinal.name;
+        }else{
+          final.f1.push(semiFinal.teams[1]);
+          semiFinal.teams[1].winSemiFinal = "winner";
+          semiFinal.teams[1].semiFinalStatus = "Winner of " + semiFinal.name;
+        }
 
       semiFinal.homeTeam = semiFinal.teams[0];
       semiFinal.awayTeam = semiFinal.teams[1];
-
-
 
     }
 }
@@ -178,6 +176,7 @@ for (var key in semiFinals) {
     var differenceRank = final.f1[0].rank - final.f1[1].rank;
     var chanceToWin = calculateChanceToWin(differenceRank);
     var randomNumber = Math.random()*100;
+
     if(randomNumber >= chanceToWin){
       winner = final.f1[0];
       finalist = final.f1[1];
@@ -198,10 +197,8 @@ for (var key in semiFinals) {
        "winner": winner
     }
 
-
     return fullKnockout;
 
-    //return teams;
   }
 
 

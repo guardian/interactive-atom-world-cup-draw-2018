@@ -5,6 +5,10 @@ import mainTemplate from '../templates/main.html'
 import potTemplate from '../templates/potTemplate.html'
 import groupsAllTemplate from '../templates/groupsAllTemplate.html'
 import teamTemplate from '../templates/teamTemplate.html'
+import roundTeamTemplate from '../templates/roundTeamTemplate.html'
+import qfTeamTemplate from '../templates/qfTeamTemplate.html'
+import sfTeamTemplate from '../templates/sfTeamTemplate.html'
+import roundsTemplate from '../templates/roundsTemplate.html'
 
 import {groupBy, sortByKeys, shuffle, compareValues, changeFirstObj, dedupe } from './libs/arrayUtils'
 
@@ -53,17 +57,17 @@ function init(){
 		// push different compiled HTML strings into array
 		// enables much faster reDraw() function
 		compiledHTMLArr.push(compiledHTML);
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
 
 	})	
 }
@@ -168,7 +172,7 @@ function formatData(data, firstRun){
 	newObj.winner = fullTourney.winner;
 	newObj.finalist = fullTourney.finalist;
 
-	console.log(newObj.fullTourney)
+	//console.log(newObj.fullTourney)
 
 	return newObj;
 
@@ -374,6 +378,8 @@ function compileHTML(newObj){
         'team': teamTemplate,
         'pot': potTemplate,
         'roundTeam' : roundTeamTemplate,
+        'qfTeam' : qfTeamTemplate,
+        'sfTeam' : sfTeamTemplate,
         'roundsTemplate' : roundsTemplate
     });
 

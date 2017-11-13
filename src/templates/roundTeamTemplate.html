@@ -1,13 +1,10 @@
 
-<div class="gv-match-info">
-  MATCH INFO HERE
-</div> 
 
           <div class="gv-match-teams">
-        
-    				<span class="gv-team-text" >{{homeTeam.Team}}</span>	
-
-            <span class="gv-team-text" >{{awayTeam.Team}}</span> 
+        <div class="gv-teams_battleline"></div>
+    				<span class="gv-round-text home r16-team  {{#if homeTeam.winRoundOf16}}qualified{{/if}}" >{{homeTeam.teamShortName}}</span>	
+    				
+            		<span class="gv-round-text away r16-team {{#if awayTeam.winRoundOf16}}qualified{{/if}}" >{{awayTeam.teamShortName}}</span> 
 			     
           </div>  
 

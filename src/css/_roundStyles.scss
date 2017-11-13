@@ -1,0 +1,99 @@
+.round-header{
+	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
+	margin:0 !important;
+}
+
+.gv-rounds-wrapper{
+	position:relative;
+	width: 144px;
+	height: 240px;
+	margin-top: 24px;
+	float: left;
+	padding: 0 5px 0;
+	border-right: 1px solid #FFF;
+	background-color: $neutral-4;
+
+
+}
+.gv-match-teams{
+	position:relative;
+	display:block;
+
+	// border-bottom: 1px dotted $neutral-3;
+	
+}
+.gv-group-round{
+	width:140px;
+	height:24px;
+	background-color: $neutral-4;
+	border-bottom: 1px dotted #FFF;
+	margin: 0;
+	
+	&.qf{
+		height:24px;
+		padding: 12.5px 0;
+	}
+
+	&.sf{
+		height:24px;
+		padding: 37.5px 0;
+	}
+}
+
+.gv-round-text{
+	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
+	font-size:12px;
+	float: left;
+	color: $neutral-1;
+	opacity: 0.8;
+	width:64px;
+	@include mq(embedThreeSixty){
+		font-size: 14px;
+		float: none;
+	}
+
+	&.qualified{
+		font-weight: 800;
+		opacity: 1;
+	}
+
+	&.r16-team{
+		font-size:12px;
+	}
+
+	&.home{
+		    float: left;
+    		text-align: right;
+	}
+
+	
+
+
+	&.away{
+		    float: right;
+    		text-align: left;
+	}
+
+	
+
+}
+
+.gv-teams_battleline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #767676;
+}
+
+.gv-teams_battleline::after{
+		content:'–';
+	}
+
+.gv-finalist{
+	width:100%;
+	font-family: "Guardian Text Sans Web";
+	text-align: center;
+}
+
