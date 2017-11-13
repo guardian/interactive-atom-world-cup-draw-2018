@@ -8,6 +8,8 @@ import teamTemplate from '../templates/teamTemplate.html'
 
 import {groupBy, sortByKeys, shuffle, compareValues, changeFirstObj, dedupe } from './libs/arrayUtils'
 
+import { buildTourney } from './libs/tourneySim'
+
 import _sortBy from 'lodash.sortby'
 
 import _remove from 'lodash.remove'
@@ -18,7 +20,7 @@ const groupAniTime = 10;
 var compiledHTML;
 var pots;
 var globalData;
-
+var teams;
 var groups = {};
 
 var groupKeys = ['groupA', 'groupB', 'groupC','groupD', 'groupE', 'groupF', 'groupG', 'groupH'];
@@ -62,15 +64,13 @@ function init(){
 		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
 		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
 		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		
-		
-		
+
 	})	
 }
 
 
 function formatData(data, firstRun){
-	console.log("run", firstRun)
+	//console.log("run", firstRun)
 	groups = {
 		groupA: { groupName: 'Group A', teams: [], strengthScore:0, strengthRating: 'weak', firstGroup:true},
 		groupB: { groupName: 'Group B', teams: [], strengthScore:0, strengthRating: 'weak'},
@@ -83,7 +83,7 @@ function formatData(data, firstRun){
 	};
 
 	let newObj = {};
-	let teams = [];
+	teams = [];
 	pots = [];
 	
 	data.sheets.testTeams.map((team) => {
@@ -114,7 +114,7 @@ function formatData(data, firstRun){
 
     let generatedGroups = generateGroups();
 
-	console.log(groups)
+
 
 	Object.keys(generatedGroups).forEach(key => {
 	    var s = 0;
@@ -159,6 +159,17 @@ function formatData(data, firstRun){
     newObj.groups = generatedGroups;
 	newObj.pots = pots;
 
+	var fullTourney = buildTourney(teams,generatedGroups);
+
+	newObj.roundOf16 = fullTourney.roundOf16;
+	newObj.quarter = fullTourney.quarter;
+	newObj.semi = fullTourney.semi;
+	newObj.final = fullTourney.final;
+	newObj.winner = fullTourney.winner;
+	newObj.finalist = fullTourney.finalist;
+
+	console.log(newObj.fullTourney)
+
 	return newObj;
 
 }
@@ -170,14 +181,82 @@ function sortNumber(a,b) {
 
 function generateGroups() {
       
-		 pots.forEach((pot,i) => {
+		pots.forEach((pot,i) => {
 		 	var randomGroupPot = [];
 			 	pot.teams.forEach((team,j) => {
 						assignToGroup(team, randomGroupPot, i);
 	    		});
     	 });
 
-		return groups;
+		var rankedGroups = rankGroups(groups);
+
+		return rankedGroups;
+
+}
+
+// OLD function generateGroups() {
+      
+// 		 pots.forEach((pot,i) => {
+// 		 	var randomGroupPot = [];
+// 			 	pot.teams.forEach((team,j) => {
+// 						assignToGroup(team, randomGroupPot, i);
+// 	    		});
+//     	 });
+
+// 		return groups;
+
+// }
+
+function rankGroups(newGroups){
+	
+    //Clear winners for new draw
+		teams.forEach((team,i) => {
+			 team.winner = "";
+		     team.groupStatus = "";
+		     team.roundOf16Status = "";
+		     team.quarterFinalStatus = "";
+		     team.semiFinalStatus = "";
+		})
+
+		for (var key in newGroups) {
+		    if (newGroups.hasOwnProperty(key)) {
+		   
+		        var group = newGroups[key];
+
+		        var randomUpset = Math.random();
+
+		        var orderedGroup = group.teams;
+
+				       if(randomUpset <= 0.1875){
+				       
+				         orderedGroup = shuffle(orderedGroup)
+					        orderedGroup[0].winner = "winner";
+					        orderedGroup[0].groupStatus = "Winner of " + group.groupName;
+					        orderedGroup[0].groupClass = "winner";
+					        orderedGroup[1].winner = "winner";
+					        orderedGroup[1].groupStatus = "Runner-up " + group.groupName;
+					        orderedGroup[1].groupClass = "runner-up";
+					        group.teamsOrdered = orderedGroup;
+
+				      	} else {
+					        orderedGroup = orderedGroup.slice().sort(function(a,b){ return a.fifaRank-b.fifaRank });					       
+					        orderedGroup[0].winner = "winner";
+					        orderedGroup[0].groupStatus = "Winner of " + group.groupName;
+					        orderedGroup[0].groupClass = "winner";
+					        orderedGroup[1].winner = "winner";
+					        orderedGroup[1].groupStatus = "Runner-up " + group.groupName;
+					        orderedGroup[1].groupClass = "runner-up";
+					        group.teamsOrdered = orderedGroup;
+				      }
+				      group.teams = orderedGroup;
+				      group.teams  = group.teams.slice().sort(function(a,b){ return a.drawPot-b.drawPot });
+
+
+				
+		    }
+		}
+
+    return groups;
 
 }
 
