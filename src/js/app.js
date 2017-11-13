@@ -372,7 +372,9 @@ function compileHTML(newObj){
 
     Handlebars.registerPartial({
         'team': teamTemplate,
-        'pot': potTemplate
+        'pot': potTemplate,
+        'roundTeam' : roundTeamTemplate,
+        'roundsTemplate' : roundsTemplate
     });
 
     var content = Handlebars.compile(
