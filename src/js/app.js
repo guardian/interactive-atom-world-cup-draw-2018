@@ -57,17 +57,18 @@ function init(){
 		// push different compiled HTML strings into array
 		// enables much faster reDraw() function
 		compiledHTMLArr.push(compiledHTML);
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		compiledHTMLArr.push(compileHTML(formatData(resp.data))); //10
+		compiledHTMLArr.push(compileHTML(formatData(resp.data))); 
+		compiledHTMLArr.push(compileHTML(formatData(resp.data))); //12
 
 	})	
 }
@@ -96,6 +97,7 @@ function formatData(data, firstRun){
 		if (!team.teamShort){ team.teamShortName = team.teamName }
 		team.drawPot = team["Draw pot"];
 		team.fifaRank = team["october-rank"];
+		team.rank  = team["october-rank"];
 		team.association = team.Association;
 		if(team.cont == 'Europe'){ team.europeanException = true}
 		if(team.drawPot == 1) { team.seeded = true };

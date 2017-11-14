@@ -32,7 +32,7 @@
 
 .gv-pot-div-intro{
 	margin:0 10px;
-	
+	width: calc(100% - 20px);
 	@include mq(embedFiveEighty){
 		margin: 0;
 	}

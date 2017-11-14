@@ -2,7 +2,7 @@
 
 <div class="gv-pot-div-intro">
 Germany, Brazil, Portugal, Argentina,
-Belgium, Poland, France and Russia (host)
+Belgium, Poland, France and Russia (host), teams in bold go through to knockout stage
 
 </div>
 
@@ -24,6 +24,16 @@ Belgium, Poland, France and Russia (host)
 
 	</div>
 {{/each}}
+
+</div>
+
+<div  style="padding-top:24px">
+<h5 class="gv-pot-header">Knockout stages</h5>
+
+<div class="gv-pot-div-intro">
+Teams in bold go through to next round
+
+</div>
 
 </div>
 
@@ -77,7 +87,7 @@ Belgium, Poland, France and Russia (host)
 	
 	<div class="gv-group-round final" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
 
-			<div class="gv-finalist">{{finalist.Team}}</div> <div class="gv-finalist">v</div> <div class="gv-finalist">{{winner.Team}}</div>
+			<div class="gv-finalist home {{#if final.homeTeam.winFinal}}trophyWinnerHome{{/if}}">{{final.homeTeam.Team}}</div> <div class="gv-finalist">–</div> <div class="gv-finalist away {{#if final.awayTeam.winFinal}}trophyWinnerAway{{/if}}">{{final.awayTeam.Team}}</div>
 
 	</div>
 

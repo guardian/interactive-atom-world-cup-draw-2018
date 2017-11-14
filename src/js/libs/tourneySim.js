@@ -15,7 +15,7 @@ export function buildTourney(teams,groups) {
       r5: {name: "round of 16: match 5", teams: [groups.groupE.teamsOrdered[0], groups.groupF.teamsOrdered[1]]}, //winner group A against second group B
       r6: {name: "round of 16: match 6", teams: [groups.groupE.teamsOrdered[1], groups.groupF.teamsOrdered[0]]}, //winner group B against second group A
       r7: {name: "round of 16: match 7", teams: [groups.groupG.teamsOrdered[0], groups.groupH.teamsOrdered[1]]}, //winner group C against second group D
-      r8: {name: "round of 16: match 8", teams: [groups.groupG.teamsOrdered[1], groups.groupH.teamsOrdered[0]]}    //winner group D against second group C
+      r8: {name: "round of 16: match 8", teams: [groups.groupG.teamsOrdered[1], groups.groupH.teamsOrdered[0]]}   //winner group D against second group C
     };
 
     var quarterFinals = {
@@ -154,6 +154,8 @@ for (var key in semiFinals) {
       var differenceRank = semiFinal.teams[0].rank - semiFinal.teams[1].rank;
       var chanceToWin = calculateChanceToWin(differenceRank);
 
+      console.log(chanceToWin, semiFinal.teams[0], semiFinal.teams[0])
+
       var randomNumber = Math.random()*100;
 
         if(randomNumber >= chanceToWin){
@@ -187,6 +189,9 @@ for (var key in semiFinals) {
       final.f1[1].winFinal = "winner";
     }
 
+    final.homeTeam = final.f1[0];
+    final.awayTeam = final.f1[1];
+
     //Put all the data into one object
     var fullKnockout = {
       "roundOf16" : roundOf16,
@@ -196,6 +201,8 @@ for (var key in semiFinals) {
        "finalist" : finalist,
        "winner": winner
     }
+
+    console.log(fullKnockout)
 
     return fullKnockout;
 

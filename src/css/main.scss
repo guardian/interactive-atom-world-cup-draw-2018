@@ -76,6 +76,9 @@ body{
 	background-color:#FFF !important;
 }
 
+
+
+
 .gv-wrapper{
 	height:100%;
 	margin-bottom: 12px;
@@ -129,7 +132,7 @@ body{
 
 .gv-table-wrapper{
 	height:auto;
-
+	    min-height: 360px;
 
 }
 
@@ -229,8 +232,12 @@ body{
 	}
 
 	&.qualified::after{
+		content:'';
+		@include mq(embedFiveEighty){
 		content:'•';
 		margin-left: 2px;
+	}
+		
 	}
 
 }
@@ -384,7 +391,7 @@ body{
 	width: 180px;
 	height:36px;
 	padding-top:12px;
-	margin: 12px 0 24px;
+	margin: 24px 0;
 	border-radius:1000px;
 	background-color: rgba($button, 0.8);
 	font-family: "Guardian Egyptian Web", Georgia, serif;
@@ -440,6 +447,7 @@ body{
 
 .display-mobile{
 	display:inline-block;
+	    line-height: inherit;
 	@include mq(mobileLandscape){
 		display:none;
 	}
