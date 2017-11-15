@@ -331,6 +331,8 @@ function assignToGroup(team, randomGroupPot, currentPot){
             //Push number in array to check which groups are filled
         }
 
+        console.log(a, currentGroup.length)
+
  }
 
 
