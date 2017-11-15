@@ -150,8 +150,8 @@
 				font-size:13px;
 			}
 		&.away:after{
-			content:',';
-			margin-right: 3px;
+			content:'';
+			margin-right: 12px;
 			@include mq(embedFiveEighty){
 				display:none;
 			}
@@ -174,8 +174,8 @@
 		}
 
 		&.away:after{
-			content:',';
-			margin-right: 3px;
+			content:'';
+			margin-right: 12px;
 			@include mq(embedFiveEighty){
 				display:none;
 			}
@@ -203,8 +203,8 @@
 			font-size:13px;
 		}
 		&.away:after{
-			content:',';
-			margin-right: 3px;
+			content:'';
+			margin-right: 12px;
 			@include mq(embedFiveEighty){
 				display:none;
 			}
