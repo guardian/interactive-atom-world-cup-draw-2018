@@ -1,11 +1,18 @@
 .gv-pot-div-intro, .gv-pot-div{
 	width:100%;
 	height: 48px;
-	padding-bottom:12px;
+	padding-bottom:5px;
+}
+
+.intro-note {
+	font-family: "Guardian Text Sans Web", Helvetica, Arial, sans-serif !important;
+	font-size:12px;
+	line-height:15px;
+	color:#bdbdbd;
 }
 
 .gv-pot-header{
-	margin:0 10px;
+	// margin:0 0px;
 	width:auto;
 	font-family: "Guardian Text Sans Web", Helvetica, Arial, sans-serif !important;
     font-size: 14px;
