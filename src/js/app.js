@@ -45,8 +45,6 @@ function init(){
 
 		startButtons = document.querySelectorAll('.gv-start-button');
 
-		console.log(startButtons)
-
 
 		startButtons.forEach((el) => {
 			 el.addEventListener('click', function(){ animateDraw(newObj) });
@@ -472,8 +470,6 @@ function reDraw(){
 		
 		var newHTMLStr = compiledHTMLArr[randomSlot];
 
-		console.log(randomSlot, compiledHTMLArr[randomSlot])
-
 		document.querySelector(".gv-wrapper").innerHTML = newHTMLStr;
 
 		setTimeout(function(){ 
@@ -484,7 +480,7 @@ function reDraw(){
 
 		document.querySelectorAll(".none-header-team-row").forEach((el,k) => {
 			var timeOut = k * 1000;
-			console.log(timeOut)
+			//console.log(timeOut)
 				setTimeout(function(){
 					el.classList.remove("display-none");
 				}, timeOut);
@@ -527,7 +523,40 @@ function animateTeams(a,groupAniTime){
 
 	})
 
+	animateKnockouts();
+
 	let tables = Array.from(document.querySelectorAll('.gv-group-table'));
+
+	
+
+}
+
+function animateKnockouts(){
+
+	setTimeout(function(){ Array.from(document.querySelectorAll('.r16-team')).forEach((el, k) => {
+				el.classList.remove("display-none");
+			})
+	
+	}, 700)
+
+	setTimeout(function(){ Array.from(document.querySelectorAll('.qf-team')).forEach((el, k) => {
+				el.classList.remove("display-none");
+			})
+	
+	}, 800)
+
+	setTimeout(function(){ Array.from(document.querySelectorAll('.sf-team')).forEach((el, k) => {
+				el.classList.remove("display-none");
+			})
+	
+	}, 900)
+
+	setTimeout(function(){ Array.from(document.querySelectorAll('.gv-finalist')).forEach((el, k) => {
+				el.classList.remove("display-none");
+			})
+	
+	}, 1000)
+
 
 }
 
@@ -543,6 +572,5 @@ function assignStrength(k){
 }
 	
 
-
-
 init();
+

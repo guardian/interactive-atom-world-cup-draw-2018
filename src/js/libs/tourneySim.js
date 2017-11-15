@@ -92,7 +92,7 @@ for (var key in roundOf16) {
       round.awayTeam = round.teams[1];
    }
 
-console.log(round)
+
 
 }
      
@@ -154,7 +154,7 @@ for (var key in semiFinals) {
       var differenceRank = semiFinal.teams[0].rank - semiFinal.teams[1].rank;
       var chanceToWin = calculateChanceToWin(differenceRank);
 
-      console.log(chanceToWin, semiFinal.teams[0], semiFinal.teams[0])
+      //console.log(chanceToWin, semiFinal.teams[0], semiFinal.teams[0])
 
       var randomNumber = Math.random()*100;
 
@@ -202,7 +202,7 @@ for (var key in semiFinals) {
        "winner": winner
     }
 
-    console.log(fullKnockout)
+    //console.log(fullKnockout)
 
     return fullKnockout;
 
