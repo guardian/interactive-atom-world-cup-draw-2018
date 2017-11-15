@@ -8,11 +8,11 @@
 	margin:0 10px;
 	width:auto;
 	font-family: "Guardian Text Sans Web", Helvetica, Arial, sans-serif !important;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
 
 	@include mq(embedFiveEighty){
-		font-size: 16px;
+		font-size: 14px;
 		margin: 0;
 	}
 }
@@ -41,4 +41,3 @@
 .fifty-pc{
 	color:#ccc;
 }
-
