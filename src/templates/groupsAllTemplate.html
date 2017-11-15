@@ -2,7 +2,7 @@
 
 <div class="gv-pot-div-intro">
 Germany, Brazil, Portugal, Argentina,
-Belgium, Poland, France and Russia (host), teams in bold go through to knockout stage
+Belgium, Poland, France and Russia (host)
 
 </div>
 
@@ -30,10 +30,9 @@ Belgium, Poland, France and Russia (host), teams in bold go through to knockout 
 <div  style="padding-top:24px">
 <h5 class="gv-pot-header">Knockout stages</h5>
 
-<div class="gv-pot-div-intro">
-Teams in bold go through to next round
+<!-- <div class="gv-pot-div-intro">
 
-</div>
+</div> -->
 
 </div>
 
@@ -41,7 +40,7 @@ Teams in bold go through to next round
 <h4 class="round-header">Round of 16</h4>
 	{{#each roundOf16}}
 	<div class="gv-group-round r16" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
-		
+
 			{{>roundTeam}}
 
 	</div>
@@ -54,11 +53,11 @@ Teams in bold go through to next round
 <div class="gv-rounds-wrapper qf">
 <h4 class="round-header">Quarter finals</h4>
 
-	
+
 
 	{{#each quarter}}
 	<div class="gv-group-round qf" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
-		
+
 			{{>qfTeam}}
 
 	</div>
@@ -73,7 +72,7 @@ Teams in bold go through to next round
 <h4  class="round-header">Semi finals</h4>
 	{{#each semi}}
 	<div class="gv-group-round sf" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
-		
+
 			{{>sfTeam}}
 
 	</div>
@@ -84,7 +83,7 @@ Teams in bold go through to next round
 
 <div class="gv-rounds-wrapper final">
 <h4  class="round-header">Final</h4>
-	
+
 	<div class="gv-group-round final" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
 
 			<div class="gv-finalist home {{#if final.homeTeam.winFinal}}trophyWinnerHome{{/if}}">{{final.homeTeam.Team}}</div> <div class="gv-finalist">–</div> <div class="gv-finalist away {{#if final.awayTeam.winFinal}}trophyWinnerAway{{/if}}">{{final.awayTeam.Team}}</div>
@@ -92,6 +91,3 @@ Teams in bold go through to next round
 	</div>
 
 </div>
-
-
-

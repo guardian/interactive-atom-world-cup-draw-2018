@@ -233,11 +233,16 @@ body{
 
 	&.qualified::after{
 		content:'';
+
 		@include mq(embedFiveEighty){
-		content:'•';
-		margin-left: 2px;
+      background-image:url("<%= path %>/assets/tick.svg");
+      height:8px;
+      width:10px;
+      display:inline-block;
+		// content:'•';
+		margin-left: 4px;
 	}
-		
+
 	}
 
 }
