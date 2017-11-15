@@ -2,9 +2,9 @@
 
 <div class="gv-match-teams sf">
         <div class="gv-teams_battleline display-none-mobile"></div>
-    				<span class="gv-round-text home sf-team  {{#if homeTeam.winSemiFinal}}qualified{{/if}} display-none" >{{homeTeam.teamShortName}}</span>	
-    				<span class="display-mobile">–</span>
-            		<span class="gv-round-text away sf-team {{#if awayTeam.winSemiFinal}}qualified{{/if}} display-none" >{{awayTeam.teamShortName}}</span> 
+    				<span class="gv-round-text home sf-team  {{#if homeTeam.winSemiFinal}}qualified{{/if}} display-none {{homeTeam.teamShortName}}" >{{homeTeam.teamShortName}}</span>	
+    				<span class="gv-mobile-battleline display-mobile display-none">–</span>
+            		<span class="gv-round-text away sf-team {{#if awayTeam.winSemiFinal}}qualified{{/if}} display-none {{awayTeam.teamShortName}}" >{{awayTeam.teamShortName}}</span> 
 			     	
           </div>  
 

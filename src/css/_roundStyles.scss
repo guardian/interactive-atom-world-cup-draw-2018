@@ -2,6 +2,7 @@
 
 	margin: 12px 0 0 0 !important;
 	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
+	font-size: 16px;
 	color:$neutral-1;
 	@include mq(embedFiveEighty){
 		margin: 12px 0  !important;
@@ -11,6 +12,7 @@
 .gv-rounds-wrapper{
 	position:relative;
 	height: auto;
+
 	float: left;
 	padding: 0 12px 12px;
 	width: calc(100% - 25px);
@@ -19,18 +21,13 @@
     background-color: $weakest; //#F5F5F5;
 
     &.r16{
+    	min-height:100px;
     }
+
+   
 
     &.qf{
-    }
-
-    &.sf{
-
-    	// background-color: $weak;
-    }
-
-    &.qf{
-    	// background-color: $balanced;
+    	min-height:80px;
     }
 
     &.sf{
@@ -87,7 +84,6 @@
 	}
 
 	&.qf{
-
 		@include mq(embedFiveEighty){
 			padding: 12.5px 0;
 		}
@@ -104,7 +100,7 @@
 		@include mq(embedFiveEighty){
 			padding: 37.5px 0;
 		}
-
+		
 	}
 
 	&.sf:last-child{
@@ -127,17 +123,17 @@
 	font-size:12px;
 	line-height: 18px;
 	float: left;
-	color: $neutral-1;
-	opacity: 0.5;
+	color: $fifty-pc-neutral;
 	width:64px;
 	@include mq(embedFiveEighty){
-		font-size: 14px;
+		font-size: 13px;
 		line-height: 20px;
 		float: none;
 		opacity: 0.8;
 	}
 
 	&.qualified{
+		color: $neutral-1 !important;
 		font-weight: 800;
 		opacity: 1;
 
@@ -146,6 +142,10 @@
 
 	&.r16-team{
 		font-size:12px;
+
+		@include mq(embedFiveEighty){
+			font-size:11px;
+		}
 		&.away:after{
 			content:',';
 			margin-right: 3px;
@@ -153,12 +153,23 @@
 				display:none;
 			}
 		}
+
+		// &.Switzerland{
+		// 	font-size:10px;
+		// 	line-height: 20px
+		// }
 
 	}
 
 
 
 	&.qf-team{
+		font-size:12px;
+
+		@include mq(embedFiveEighty){
+			font-size:13px;
+		}
+
 		&.away:after{
 			content:',';
 			margin-right: 3px;
@@ -166,10 +177,22 @@
 				display:none;
 			}
 		}
+
+		&.Switzerland{
+			@include mq(embedFiveEighty){
+				font-size:11px;
+			}
+		}
 	}
+
+	
 
 	&.sf-team{
+		font-size:12px;
 
+		@include mq(embedFiveEighty){
+			font-size:13px;
+		}
 		&.away:after{
 			content:',';
 			margin-right: 3px;
@@ -177,7 +200,15 @@
 				display:none;
 			}
 		}
+
+		&.Switzerland{
+			@include mq(embedFiveEighty){
+				font-size:11px !important;
+			}
+		}
 	}
+
+	
 
 	// &.r16-team:last-child:after{
 	// 		content:'';
@@ -211,7 +242,7 @@
 }
 
 .gv-teams_battleline::after{
-		content:'–';
+		content:'-';
 		padding: 3px 0;
 	}
 
@@ -285,3 +316,10 @@
     	height: 24px;
     }
 }
+
+
+.hide-after:after{
+	display:none !important;
+}
+
+

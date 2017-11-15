@@ -27,6 +27,8 @@ var globalData;
 var teams;
 var groups = {};
 
+var arrSlot = 0;
+
 var groupKeys = ['groupA', 'groupB', 'groupC','groupD', 'groupE', 'groupF', 'groupG', 'groupH'];
 
 var compiledHTMLArr = [];
@@ -65,8 +67,16 @@ function init(){
 		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
 		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
 		compiledHTMLArr.push(compileHTML(formatData(resp.data))); //10
-		compiledHTMLArr.push(compileHTML(formatData(resp.data))); 
+		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
 		compiledHTMLArr.push(compileHTML(formatData(resp.data))); //12
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data))); //15
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
+		// compiledHTMLArr.push(compileHTML(formatData(resp.data))); //20
 
 	})	
 }
@@ -118,8 +128,6 @@ function formatData(data, firstRun){
 
     let generatedGroups = generateGroups();
 
-
-
 	Object.keys(generatedGroups).forEach(key => {
 	    var s = 0;
 	    generatedGroups[key].teams.map(o => {
@@ -133,7 +141,8 @@ function formatData(data, firstRun){
 
 	Object.keys(generatedGroups).forEach(key => {
 	    var s = 0;
-	    generatedGroups[key].teams.map(o => {
+	    generatedGroups[key].teams.map((o, num) => {
+
 	    	s+= Number(o.fifaRank);    	
 	    })
 
@@ -224,8 +233,26 @@ function rankGroups(newGroups){
 
 		for (var key in newGroups) {
 		    if (newGroups.hasOwnProperty(key)) {
+
+
 		   
 		        var group = newGroups[key];
+
+				if(group.teams.length > 4){
+					var tempGroup  = [];
+
+					group.teams.map((o,k) => {
+						if(k < 4){
+							tempGroup.push(o)
+						}
+					})
+					console.log(group.teams);
+
+					console.log(tempGroup);
+
+					group.teams = tempGroup;
+					
+				}
 
 		        var randomUpset = Math.random();
 
@@ -308,8 +335,6 @@ function assignToGroup(team, randomGroupPot, currentPot){
             return (groupTeam.cont === team.cont);
         });
 
-
-
         if (hasSameContinent) {
         	try {
 	    		//console.log('same continent. Pick again',team.teamName);
@@ -331,7 +356,20 @@ function assignToGroup(team, randomGroupPot, currentPot){
             //Push number in array to check which groups are filled
         }
 
-        console.log(a, currentGroup.length)
+
+
+
+        
+
+      //   if(currentGroup.length == 5){
+      //   	currentGroup.map((o,k) => {
+      //   		if(k == 4 && o.Team){
+        		
+      //   			console.log(o)
+      //   		}
+	        	
+		    // })
+      //   }
 
  }
 
@@ -445,7 +483,7 @@ function animateDraw(a){
 
 	setTimeout(function(){
 		startButtons.forEach((el) => {
-			el.innerHTML = "Draw again"; 
+			el.innerHTML = "<div class='gv-button-label'>Draw again</div>"; 
 			el.classList.remove('animated');
 			el.addEventListener('click', function(){  reDraw() }); 
 		})
@@ -457,6 +495,44 @@ function animateDraw(a){
 		})
 	}, 2000);
 
+
+	tidyView();
+	
+
+
+	
+
+}
+
+function tidyView(){
+
+	var r16TeamsArr = Array.from(document.querySelectorAll('.r16-team'))
+
+		r16TeamsArr.forEach((el,k) => {
+			if(k == r16TeamsArr.length - 1){
+				el.classList.add("hide-after");	
+			}
+							
+		})	
+
+	var qfTeamsArr = Array.from(document.querySelectorAll('.qf-team'))
+
+		qfTeamsArr.forEach((el,k) => {
+			if(k == qfTeamsArr.length - 1){
+				el.classList.add("hide-after");	
+			}
+							
+		})
+
+	var sfTeamsArr = Array.from(document.querySelectorAll('.sf-team'))
+
+		sfTeamsArr.forEach((el,k) => {
+			if(k == sfTeamsArr.length - 1){
+				el.classList.add("hide-after");	
+			}
+							
+		})	
+
 }
 
 function reDraw(){
@@ -467,6 +543,8 @@ function reDraw(){
 		document.querySelectorAll(".none-header-team-row").forEach((el) => {
 			el.classList.add("display-none");
 		});
+
+
 
 		var randomSlot = Math.floor(Math.random() * compiledHTMLArr.length);
 		
@@ -536,6 +614,12 @@ function animateTeams(a,groupAniTime){
 function animateKnockouts(){
 
 	setTimeout(function(){ Array.from(document.querySelectorAll('.r16-team')).forEach((el, k) => {
+				el.classList.remove("display-none");
+			})
+	
+	}, 700)
+
+	setTimeout(function(){ Array.from(document.querySelectorAll('.gv-mobile-battleline')).forEach((el, k) => {
 				el.classList.remove("display-none");
 			})
 	

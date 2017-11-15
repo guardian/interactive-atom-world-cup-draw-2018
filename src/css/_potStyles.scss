@@ -2,24 +2,32 @@
 	width:100%;
 	height: 48px;
 	padding-bottom:5px;
+	font-size:16px !important;
 }
 
-.intro-note {
+.intro-note {	
+    width: calc(100% - 20px);
+    margin: 0 10px;
 	font-family: "Guardian Text Sans Web", Helvetica, Arial, sans-serif !important;
-	font-size:12px;
-	line-height:15px;
+	font-size:13px;
+	line-height:16px;
 	color:#bdbdbd;
+	@include mq(embedFiveEighty){
+		width: 100%;
+    	margin: 0 ;
+	}
+
 }
 
 .gv-pot-header{
 	// margin:0 0px;
 	width:auto;
 	font-family: "Guardian Text Sans Web", Helvetica, Arial, sans-serif !important;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
 
 	@include mq(embedFiveEighty){
-		font-size: 14px;
+		font-size: 13px;
 		margin: 0;
 	}
 }
@@ -32,7 +40,7 @@
 
 .gv-pot-div-intro, .gv-pot-item{
 	font-family:"Guardian Text Sans Web", Helvetica, Helvetica, Arial, sans-serif;
-	font-size:14px;
+	font-size:13px;
 	line-height: 22px;
 	height:auto;
 }

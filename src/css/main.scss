@@ -21,6 +21,8 @@ $neutral-4:#dcdcdc;
 $neutral-5:#eaeaea;
 $neutral-6:rgb(248,248,248);
 
+$fifty-pc-neutral: #858585;
+
 //red - yellow - warm neutrals #1
 $accent-color: #FFCC00;
 $neutral: #e8e8e8;
@@ -148,7 +150,7 @@ body{
 	text-align:right;
 	@include mq(embedFiveEighty){
 		right:12px;
-		top: 33px;
+		top: 36px;
 		width:60px;
 	}
 
@@ -221,12 +223,13 @@ body{
 	float: left;
 	color: $neutral-1;
 	opacity: 0.8;
-	@include mq(embedThreeSixty){
-		font-size: 14px;
+	@include mq(embedFiveEighty){
+		font-size: 13px;
 		float: none;
 	}
 
 	&.qualified{
+		color: $neutral-1 !important;
 		font-weight: 800;
 		opacity: 1;
 	}
@@ -250,9 +253,9 @@ body{
 .gv-rank-text{
 	font-family: "Guardian Text Sans Web", "Helvetica", Helvetica, Arial, sans-serif;
 	font-size:10px;
-	margin: 1px 5px 0 1px;
+	margin: 1px 5px 0 2px;
 	float: left;
-	@include mq(embedThreeSixty){
+	@include mq(embedFiveEighty){
 		font-size: 12px;
 		margin: 0 5px 0 0;
 		float: none;
@@ -387,31 +390,32 @@ body{
 	}
 }
 
-
-
-
-
-
 .gv-start-button{
+	position:relative;
 	width: 180px;
-	height:36px;
-	padding-top:12px;
+	height:39px;
+	padding-top:9px;
 	margin: 24px 0;
+	margin-left: calc(50% - 90px);
 	border-radius:1000px;
 	background-color: rgba($button, 0.8);
-	font-family: "Guardian Egyptian Web", Georgia, serif;
+	cursor:pointer;
+}
+
+.gv-button-label {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    height: 21px;
+    width: 140px;
+    font-family: "Guardian Egyptian Web", Georgia, serif;
 	font-size: 20px;
 	font-weight:900;
 	text-align:center;
 	color:#222;
-	margin-left: calc(50% - 90px);
-	cursor:pointer;
-
-	&.animated{
-		-moz-animation:  colorchange 6s infinite;
-		-webkit-animation:  colorchange 6s infinite;
-		animation:  colorchange 6s infinite;
-	}
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: 100px 4px;
 }
 
 
@@ -473,3 +477,13 @@ body{
 .display-none{
 	display:none;
 }
+
+.group-place-4{
+	
+}
+
+.group-place-4{
+	color:red;
+}
+
+

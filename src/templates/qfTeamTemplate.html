@@ -2,9 +2,9 @@
 
 <div class="gv-match-teams qf">
         <div class="gv-teams_battleline display-none-mobile"></div>
-    				<span class="gv-round-text home qf-team  {{#if homeTeam.winQuarterFinal}}qualified{{/if}} display-none" >{{homeTeam.teamShortName}}</span>	
-    				<span class="display-mobile">–</span>
-            		<span class="gv-round-text away qf-team {{#if awayTeam.winQuarterFinal}}qualified{{/if}} display-none" >{{awayTeam.teamShortName}}</span> 
+    				<span class="gv-round-text home qf-team  {{#if homeTeam.winQuarterFinal}}qualified{{/if}} display-none {{homeTeam.teamShortName}}" >{{homeTeam.teamShortName}}</span>	
+    				<span class="gv-mobile-battleline display-mobile display-none">–</span>
+            		<span class="gv-round-text away qf-team {{#if awayTeam.winQuarterFinal}}qualified{{/if}} display-none {{awayTeam.teamShortName}}" >{{awayTeam.teamShortName}}</span> 
 			     
           </div>  
 
