@@ -146,6 +146,9 @@
 		@include mq(embedFiveEighty){
 			font-size:11px;
 		}
+		@include mq(embedSevenEighty){
+				font-size:13px;
+			}
 		&.away:after{
 			content:',';
 			margin-right: 3px;
@@ -182,7 +185,13 @@
 			@include mq(embedFiveEighty){
 				font-size:11px;
 			}
+
+			@include mq(embedSevenEighty){
+				font-size:13px;
+			}
 		}
+
+
 	}
 
 	
@@ -204,6 +213,9 @@
 		&.Switzerland{
 			@include mq(embedFiveEighty){
 				font-size:11px !important;
+			}
+			@include mq(embedSevenEighty){
+				font-size:13px;
 			}
 		}
 	}
