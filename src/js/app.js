@@ -99,8 +99,8 @@ function formatData(data, firstRun){
 		team.drawPot = team["Draw pot"];
 		team.fifaRank = team["october-rank"];
 		team.rank  = Number(team["guardian-rank"]);
-		if(team.rank > 4 && team.rank < 17){ team.rank = Math.ceil(team.rank * 1.5) };
-		if(team.rank > 16 ){ team.rank = team.rank*2 };
+		if(team.rank > 4 && team.rank < 17){ team.rank = Math.ceil(team.rank * 2) }; //weighting in favour
+		if(team.rank > 16 ){ team.rank = team.rank * 3 };
 		team.association = team.Association;
 		if(team.cont == 'Europe'){ team.europeanException = true}
 		if(team.drawPot == 1) { team.seeded = true };
@@ -241,9 +241,7 @@ function rankGroups(newGroups){
 							tempGroup.push(o)
 						}
 					})
-					console.log(group.teams);
-
-					console.log(tempGroup);
+		
 
 					group.teams = tempGroup;
 					
@@ -501,12 +499,10 @@ function animateDraw(a){
 
 function addOutcome(){
 
-	if (compiledHTMLArr.length < 50){
+	if (compiledHTMLArr.length < 60){
 		compiledHTMLArr.push(compileHTML(formatData(globalData)));
 	}
 	
-
-	console.log("addOutcome", compiledHTMLArr.length)
 
 }
 
