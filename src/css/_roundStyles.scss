@@ -24,15 +24,12 @@
     	min-height:100px;
     }
 
-   
-
     &.qf{
     	min-height:80px;
     }
 
     &.sf{
     	// background-color: $strong;
-
     }
 
 	&.final{
@@ -147,7 +144,7 @@
 			font-size:11px;
 		}
 		@include mq(embedSevenEighty){
-				font-size:13px;
+				font-size:14px;
 			}
 		&.away:after{
 			content:'';

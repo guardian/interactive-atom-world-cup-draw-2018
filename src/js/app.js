@@ -99,7 +99,7 @@ function formatData(data, firstRun){
 		team.drawPot = team["Draw pot"];
 		team.fifaRank = team["october-rank"];
 		team.rank  = Number(team["guardian-rank"]);
-		if(team.rank > 4 && team.rank < 17){ team.rank = team.rank*2 };
+		if(team.rank > 4 && team.rank < 17){ team.rank = Math.ceil(team.rank * 1.5) };
 		if(team.rank > 16 ){ team.rank = team.rank*2 };
 		team.association = team.Association;
 		if(team.cont == 'Europe'){ team.europeanException = true}
