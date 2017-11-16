@@ -98,7 +98,7 @@ function formatData(data, firstRun){
 		if (!team.teamShort){ team.teamShortName = team.teamName }
 		team.drawPot = team["Draw pot"];
 		team.fifaRank = team["october-rank"];
-		team.rank  = team["october-rank"];
+		team.rank  = team["guardian-rank"];
 		team.association = team.Association;
 		if(team.cont == 'Europe'){ team.europeanException = true}
 		if(team.drawPot == 1) { team.seeded = true };
