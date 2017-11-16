@@ -124,7 +124,7 @@ function formatData(data, firstRun){
 	Object.keys(generatedGroups).forEach(key => {
 	    var s = 0;
 	    generatedGroups[key].teams.map(o => {
-	    	s+= Number(o.fifaRank);    	
+	    	s+= Number(o.rank);    	
 	    })
 
 	    generatedGroups[key].strengthScore = s;	
@@ -136,7 +136,7 @@ function formatData(data, firstRun){
 	    var s = 0;
 	    generatedGroups[key].teams.map((o, num) => {
 
-	    	s+= Number(o.fifaRank);    	
+	    	s+= Number(o.rank);    	
 	    })
 
 	    generatedGroups[key].strengthScore = s;	
@@ -263,7 +263,7 @@ function rankGroups(newGroups){
 					        group.teamsOrdered = orderedGroup;
 
 				      	} else {
-					        orderedGroup = orderedGroup.slice().sort(function(a,b){ return a.fifaRank-b.fifaRank });					       
+					        orderedGroup = orderedGroup.slice().sort(function(a,b){ return a.rank-b.rank });					       
 					        orderedGroup[0].winner = "winner";
 					        orderedGroup[0].groupStatus = "Winner of " + group.groupName;
 					        orderedGroup[0].groupClass = "winner";
