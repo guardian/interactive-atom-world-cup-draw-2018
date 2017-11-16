@@ -67,16 +67,9 @@ function init(){
 		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
 		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
 		compiledHTMLArr.push(compileHTML(formatData(resp.data))); //10
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data))); //12
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data))); //15
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		// compiledHTMLArr.push(compileHTML(formatData(resp.data))); //20
+
+
+		globalData = resp.data;
 
 	})	
 }
@@ -496,7 +489,7 @@ function animateDraw(a){
 	}, 2000);
 
 
-	tidyView();
+	addOutcome();
 	
 
 
@@ -504,34 +497,14 @@ function animateDraw(a){
 
 }
 
-function tidyView(){
+function addOutcome(){
 
-	var r16TeamsArr = Array.from(document.querySelectorAll('.r16-team'))
+	if (compiledHTMLArr.length < 50){
+		compiledHTMLArr.push(compileHTML(formatData(globalData)));
+	}
+	
 
-		r16TeamsArr.forEach((el,k) => {
-			if(k == r16TeamsArr.length - 1){
-				el.classList.add("hide-after");	
-			}
-							
-		})	
-
-	var qfTeamsArr = Array.from(document.querySelectorAll('.qf-team'))
-
-		qfTeamsArr.forEach((el,k) => {
-			if(k == qfTeamsArr.length - 1){
-				el.classList.add("hide-after");	
-			}
-							
-		})
-
-	var sfTeamsArr = Array.from(document.querySelectorAll('.sf-team'))
-
-		sfTeamsArr.forEach((el,k) => {
-			if(k == sfTeamsArr.length - 1){
-				el.classList.add("hide-after");	
-			}
-							
-		})	
+	console.log("addOutcome", compiledHTMLArr.length)
 
 }
 
