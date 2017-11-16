@@ -154,9 +154,9 @@ for (var key in semiFinals) {
       var differenceRank = semiFinal.teams[0].rank - semiFinal.teams[1].rank;
       var chanceToWin = calculateChanceToWin(differenceRank);
 
-      //console.log(chanceToWin, semiFinal.teams[0], semiFinal.teams[0])
-
       var randomNumber = Math.random()*100;
+
+       // console.log( semiFinal.teams[0].Team,  semiFinal.teams[1].Team, chanceToWin)
 
         if(randomNumber >= chanceToWin){
           final.f1.push(semiFinal.teams[0]);
