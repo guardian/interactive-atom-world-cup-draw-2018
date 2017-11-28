@@ -7,7 +7,7 @@
 // Uncomment for full screen (including immersive article main media)
 //@import "fullscreen";
 
-$ani-delay:0.5s;
+$ani-delay:0s;
 
 $comment-support-1: #7d7569;
 $graphics-dark-blue:rgb(0, 87, 137);
@@ -230,13 +230,13 @@ html, body{
 		float: none;
 	}
 
-	&.qualified{
+	&.check{
 		color: $neutral-1 !important;
 		font-weight: 800;
 		opacity: 1;
 	}
 
-	&.qualified::after{
+	&.check::after{
 		content:'';
 
 		@include mq(embedFiveEighty){
@@ -394,6 +394,7 @@ html, body{
 
 .gv-start-button{
 	position:relative;
+	display: inline-block;
 	width: 180px;
 	height:39px;
 	padding-top:9px;

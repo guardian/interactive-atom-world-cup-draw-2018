@@ -7,8 +7,8 @@
 <div class="gv-table-wrapper ">
 
 {{#each groups}}
-	<div class="gv-group-table" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}">
-		<div class="gv-table-col-head {{strengthRating}}" data-strength="{{strengthRating}}">&nbsp;</div>
+	<div class="gv-group-table {{strengthRating}}" data-strength-score="{{strengthScore}}" data-strength="{{strengthRating}}" >
+		<div class="gv-table-col-head {{strengthRating}}" data-strength="{{strengthRating}}">{{strengthRating}}</div>
 		<div class="gv-team-row header"><h4>{{groupName}}</h4>
 		{{#if firstGroup}}
 		<div class="gv-table-minor-header display-none-mobile">FIFA ranking</div>
@@ -23,7 +23,7 @@
 </div>
 
 <div  style="padding-top:30px">
-<div class= "gv-pot-div-intro"> This is what could happen in <span style='font-weight:600'>the knockout stages</span></div>
+<div class= "gv-pot-div-intro">This is what could happen in <span style='font-weight:600'>the knockout stages</span></div>
 
 <!-- <div class="gv-pot-div-intro">
 

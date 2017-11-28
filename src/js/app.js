@@ -69,6 +69,15 @@ function init(){
 		compiledHTMLArr.push(compileHTML(formatData(resp.data))); //10
 
 
+		// Array.from(document.querySelectorAll('.gv-group-table')).forEach((table,k) => {
+		// 	 table.classList.add(table.getAttribute("data-strength"));
+		// })
+
+		// Array.from(document.querySelectorAll('.gv-table-col-head')).forEach((el,k) => {
+		// 	el.innerHTML = el.getAttribute("data-strength");					
+		// })	
+
+
 		globalData = resp.data;
 
 	})	
@@ -175,8 +184,6 @@ function formatData(data, firstRun){
 	newObj.final = fullTourney.final;
 	newObj.winner = fullTourney.winner;
 	newObj.finalist = fullTourney.finalist;
-
-	//console.log(newObj.fullTourney)
 
 	return newObj;
 
@@ -287,89 +294,16 @@ function rankGroups(newGroups){
 
 function assignToGroup(team, randomGroupPot, currentPot){
 
-		var randomNumber = Math.floor(Math.random() * 8);
-		var a = randomGroupPot.indexOf(randomNumber);
-		
+		var selectgroup = 'group'+team.draw_group;
+		groups[selectgroup].teams.push(team);
 
-		if(team.teamName == "Russia"){
- 			var currentGroup = groups[groupKeys[0]].teams;
- 			currentGroup.push(team);
- 			randomGroupPot.push(0);
-            return;
- 		}
-
- 		if (a > -1){
-        	// console.log('Already used that group. Pick another.', randomNumber)
-            return assignToGroup(team, randomGroupPot, currentPot);
-        }
-
-
-		var currentGroup = groups[groupKeys[randomNumber]].teams;
-       
-		// Only one continent allowed per group (except EU which is allowed two)
-        var EUTeams = currentGroup.filter(function(groupTeam) {
-            return groupTeam.cont === 'Europe';
-        });
-
-        if (team.cont === 'Europe' && EUTeams.length === 2) {
-        	try {
-        	//console.log('Cant add ',team.teamName,' Already 2 EU teams. Pick again ', EUTeams)
-            return assignToGroup(team, randomGroupPot, currentPot); 
-        	} catch (e) {    
-	    		reGenerateGroups();	
-	    	}
-        }
-
-        var hasSameContinent = currentGroup.some(function(groupTeam) {
-            if (groupTeam.cont === 'Europe'){
-					return false;
-        		}
-                
-            return (groupTeam.cont === team.cont);
-        });
-
-        if (hasSameContinent) {
-        	try {
-	    		//console.log('same continent. Pick again',team.teamName);
-	            return assignToGroup(team, randomGroupPot, currentPot);
-			} catch (e) {    
-	    		reGenerateGroups();		
-	    	}
-
-         	
-        }
-
-        if(a == -1){
-        	try {
-	            currentGroup.push(team);
-	            randomGroupPot.push(randomNumber);
-	        } catch (e) {    
-	    		reGenerateGroups();		
-	    	}
-            //Push number in array to check which groups are filled
-        }
-
-
-
-
-        
-
-      //   if(currentGroup.length == 5){
-      //   	currentGroup.map((o,k) => {
-      //   		if(k == 4 && o.Team){
-        		
-      //   			console.log(o)
-      //   		}
-	        	
-		    // })
-      //   }
 
  }
 
 
 function reGenerateGroups(){
 	groups = {
-		groupA: { groupName: 'Group A', teams: [], strengthScore:0, strengthRating: 'weak', firstGroup:true},
+		groupA: { groupName: 'Group A', teams: [], strengthScore:0, strengthRating: 'weak'},
 		groupB: { groupName: 'Group B', teams: [], strengthScore:0, strengthRating: 'weak'},
 		groupC: { groupName: 'Group C', teams: [], strengthScore:0, strengthRating: 'weak'},
 		groupD: { groupName: 'Group D', teams: [], strengthScore:0, strengthRating: 'weak'},
@@ -458,17 +392,10 @@ function animateDraw(a){
    });
 
 
-	let drawDone = setTimeout(function(){
+	
 
-		Array.from(document.querySelectorAll('.gv-group-table')).forEach((table,k) => {
-			 table.classList.add(table.getAttribute("data-strength"));
-		})
 
-		Array.from(document.querySelectorAll('.gv-table-col-head')).forEach((el,k) => {
-			el.innerHTML = el.getAttribute("data-strength");					
-		})	
 
-	}, 4*groupAniTime);
 
 	startButtons.forEach((el) => {
 			 el.removeEventListener('click', function(){ animateDraw(newObj) });
@@ -488,14 +415,19 @@ function animateDraw(a){
 		})
 	}, 2000);
 
+	document.querySelectorAll(".qualified").forEach((el,k) => {
+			var timeOut = k * 30;
+			//console.log(timeOut)
+				setTimeout(function(){
+					el.classList.add("check");
+				}, timeOut);
+
+		});
 
 	addOutcome();
-	
-
-
-	
 
 }
+
 
 function addOutcome(){
 
@@ -511,11 +443,10 @@ function reDraw(){
 			el.classList.add("display-none");
 		});
 
+
 		document.querySelectorAll(".none-header-team-row").forEach((el) => {
-			el.classList.add("display-none");
+			//el.classList.add("display-none");
 		});
-
-
 
 		var randomSlot = Math.floor(Math.random() * compiledHTMLArr.length);
 		
@@ -537,6 +468,17 @@ function reDraw(){
 				}, timeOut);
 
 		});
+
+		document.querySelectorAll(".qualified").forEach((el,k) => {
+			var timeOut = k * 30;
+			//console.log(timeOut)
+				setTimeout(function(){
+					el.classList.add("check");
+				}, timeOut);
+
+		});
+
+	
 
 }
 
