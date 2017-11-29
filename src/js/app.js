@@ -56,18 +56,7 @@ function init(){
 
 		// push different compiled HTML strings into array
 		// enables much faster reDraw() function
-		compiledHTMLArr.push(compiledHTML);
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data)));
-		compiledHTMLArr.push(compileHTML(formatData(resp.data))); //10
-
+		
 
 		// Array.from(document.querySelectorAll('.gv-group-table')).forEach((table,k) => {
 		// 	 table.classList.add(table.getAttribute("data-strength"));
@@ -78,7 +67,6 @@ function init(){
 		// })	
 
 
-		globalData = resp.data;
 
 	})	
 }
@@ -397,17 +385,7 @@ function animateDraw(a){
 
 
 
-	startButtons.forEach((el) => {
-			 el.removeEventListener('click', function(){ animateDraw(newObj) });
-		})
-
-	setTimeout(function(){
-		startButtons.forEach((el) => {
-			el.innerHTML = "<div class='gv-button-label'>Draw again</div>"; 
-			el.classList.remove('animated');
-			el.addEventListener('click', function(){  reDraw() }); 
-		})
-	}, 2000);
+	
 
 	setTimeout(function(){
 		document.querySelectorAll(".host-item").forEach((el) => {
@@ -415,14 +393,7 @@ function animateDraw(a){
 		})
 	}, 2000);
 
-	document.querySelectorAll(".qualified").forEach((el,k) => {
-			var timeOut = k * 30;
-			//console.log(timeOut)
-				setTimeout(function(){
-					el.classList.add("check");
-				}, timeOut);
-
-		});
+	
 
 	addOutcome();
 
