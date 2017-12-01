@@ -77,6 +77,7 @@ function formatData(data, firstRun){
 	
 	data.sheets.testTeams.map((team) => {
 		team.teamName = team.Team;
+		team.groupSlot = team.group_slot - 1;
 		if (team.teamShort){ team.teamShortName = team.teamShort }
 		if (!team.teamShort){ team.teamShortName = team.teamName }
 		team.drawPot = team["Draw pot"];
@@ -149,6 +150,8 @@ function formatData(data, firstRun){
 
     newObj.groups = generatedGroups;
 	newObj.pots = pots;
+
+	console.log(groups)
 
 	var fullTourney = buildTourney(teams,generatedGroups);
 
@@ -241,7 +244,7 @@ function rankGroups(newGroups){
 					        group.teamsOrdered = orderedGroup;
 				      }
 				      group.teams = orderedGroup;
-				      group.teams  = group.teams.slice().sort(function(a,b){ return a.drawPot-b.drawPot });
+				      group.teams  = group.teams.slice().sort(function(a,b){ return a.groupSlot-b.groupSlot });
 
 
 				
