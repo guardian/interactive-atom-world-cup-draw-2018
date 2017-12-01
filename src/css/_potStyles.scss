@@ -7,28 +7,27 @@
 
 .intro-note {	
     width: 100%;
-    margin: 0;
+    margin: 0 0 0 10px;
 	font-family: "Guardian Text Sans Web", Helvetica, Arial, sans-serif !important;
 	font-size:13px;
 	line-height:16px;
 	color:#bdbdbd;
 	@include mq(embedFiveEighty){
 		width: 100%;
-    	margin: 0 ;
 	}
 
 }
 
 .gv-pot-header{
-	// margin:0 0px;
 	width:auto;
+	margin: 0 0 0 10px;
 	font-family: "Guardian Text Sans Web", Helvetica, Arial, sans-serif !important;
     font-size: 13px;
     font-weight: 700;
 
 	@include mq(embedFiveEighty){
 		font-size: 13px;
-		margin: 0;
+		
 	}
 }
 
@@ -46,10 +45,10 @@
 }
 
 .gv-pot-div-intro{
-	margin:0;
+	margin:0 0 0 10px;
 	width: calc(100% - 20px);
 	@include mq(embedFiveEighty){
-		margin: 0;
+		
 	}
 }
 

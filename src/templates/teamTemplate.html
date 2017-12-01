@@ -2,7 +2,7 @@
   <div class="gv-team-row none-header-team-row {{#if seeded}}no-border{{/if}} group-place-{{groupPlace}}" data-team="{{teamName}}">
   	
       <span class="gv-team-text display-mobile {{#if winner}}qualified{{/if}}" data-association="{{association}}">{{teamShortName}}</span>
-      <span class="gv-rank-text display-mobile " >({{fifaRank}})</span>
+      <span class="gv-rank-text display-mobile " >({{#if hostTeam}}FIFA rank {{/if}}{{fifaRank}})</span>
   	<span class="gv-team-text display-none-mobile  {{#if winner}}qualified{{/if}}" data-association="{{association}}">{{teamName}}</span>
   	<span class="gv-rank-text display-none-mobile" style="position:absolute; right: 12px; text-align:right;">{{fifaRank}}</span>
   </div>

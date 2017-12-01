@@ -52,21 +52,7 @@ function init(){
 			 el.addEventListener('click', function(){ animateDraw(newObj) });
 		})
 
-		window.resize();
-
-		// push different compiled HTML strings into array
-		// enables much faster reDraw() function
-		
-
-		// Array.from(document.querySelectorAll('.gv-group-table')).forEach((table,k) => {
-		// 	 table.classList.add(table.getAttribute("data-strength"));
-		// })
-
-		// Array.from(document.querySelectorAll('.gv-table-col-head')).forEach((el,k) => {
-		// 	el.innerHTML = el.getAttribute("data-strength");					
-		// })	
-
-
+		window.resize(); //include this in embeds 
 
 	})	
 }
@@ -101,7 +87,7 @@ function formatData(data, firstRun){
 		team.association = team.Association;
 		if(team.cont == 'Europe'){ team.europeanException = true}
 		if(team.drawPot == 1) { team.seeded = true };
-		if(team.drawPot == 1 && team.teamName == "Russia" && firstRun) { team.hostTeam = true };
+		if(team.teamName == "Russia") { team.hostTeam = true };
 
 		teams.push(team);
 
@@ -197,18 +183,7 @@ function generateGroups() {
 
 }
 
-// OLD function generateGroups() {
-      
-// 		 pots.forEach((pot,i) => {
-// 		 	var randomGroupPot = [];
-// 			 	pot.teams.forEach((team,j) => {
-// 						assignToGroup(team, randomGroupPot, i);
-// 	    		});
-//     	 });
 
-// 		return groups;
-
-// }
 
 function rankGroups(newGroups){
 	
@@ -224,8 +199,6 @@ function rankGroups(newGroups){
 		for (var key in newGroups) {
 		    if (newGroups.hasOwnProperty(key)) {
 
-
-		   
 		        var group = newGroups[key];
 
 				if(group.teams.length > 4){
@@ -275,33 +248,17 @@ function rankGroups(newGroups){
 		    }
 		}
 
+		console.log(groups)
+
     return groups;
 
 }
 
 
 function assignToGroup(team, randomGroupPot, currentPot){
-
+		if (team.hostTeam){ console.log(team) }
 		var selectgroup = 'group'+team.draw_group;
 		groups[selectgroup].teams.push(team);
-
-
- }
-
-
-function reGenerateGroups(){
-	groups = {
-		groupA: { groupName: 'Group A', teams: [], strengthScore:0, strengthRating: 'weak'},
-		groupB: { groupName: 'Group B', teams: [], strengthScore:0, strengthRating: 'weak'},
-		groupC: { groupName: 'Group C', teams: [], strengthScore:0, strengthRating: 'weak'},
-		groupD: { groupName: 'Group D', teams: [], strengthScore:0, strengthRating: 'weak'},
-		groupE: { groupName: 'Group E', teams: [], strengthScore:0, strengthRating: 'weak'},
-		groupF: { groupName: 'Group F', teams: [], strengthScore:0, strengthRating: 'weak'},
-		groupG: { groupName: 'Group G', teams: [], strengthScore:0, strengthRating: 'weak'},
-		groupH: { groupName: 'Group H', teams: [], strengthScore:0, strengthRating: 'weak'}
-	};
-
-	generateGroups();
 }
 
 
@@ -379,14 +336,6 @@ function animateDraw(a){
 
    });
 
-
-	
-
-
-
-
-	
-
 	setTimeout(function(){
 		document.querySelectorAll(".host-item").forEach((el) => {
 			el.classList.add("display-none");
@@ -409,49 +358,7 @@ function addOutcome(){
 
 }
 
-function reDraw(){
-		document.querySelectorAll(".host-item").forEach((el) => {
-			el.classList.add("display-none");
-		});
 
-
-		document.querySelectorAll(".none-header-team-row").forEach((el) => {
-			//el.classList.add("display-none");
-		});
-
-		var randomSlot = Math.floor(Math.random() * compiledHTMLArr.length);
-		
-		var newHTMLStr = compiledHTMLArr[randomSlot];
-
-		document.querySelector(".gv-wrapper").innerHTML = newHTMLStr;
-
-		setTimeout(function(){ 
-			document.querySelectorAll(".host-item").forEach((el) => {
-				el.classList.add("display-none");
-			}) 
-		}, 500 );
-
-		document.querySelectorAll(".none-header-team-row").forEach((el,k) => {
-			var timeOut = k * 1000;
-			//console.log(timeOut)
-				setTimeout(function(){
-					el.classList.remove("display-none");
-				}, timeOut);
-
-		});
-
-		document.querySelectorAll(".qualified").forEach((el,k) => {
-			var timeOut = k * 30;
-			//console.log(timeOut)
-				setTimeout(function(){
-					el.classList.add("check");
-				}, timeOut);
-
-		});
-
-	
-
-}
 
 function animateTeams(a,groupAniTime){
 
@@ -487,7 +394,6 @@ function animateTeams(a,groupAniTime){
 
 	})
 
-	animateKnockouts();
 
 	let tables = Array.from(document.querySelectorAll('.gv-group-table'));
 
@@ -495,40 +401,6 @@ function animateTeams(a,groupAniTime){
 
 }
 
-function animateKnockouts(){
-
-	setTimeout(function(){ Array.from(document.querySelectorAll('.r16-team')).forEach((el, k) => {
-				el.classList.remove("display-none");
-			})
-	
-	}, 700)
-
-	setTimeout(function(){ Array.from(document.querySelectorAll('.gv-mobile-battleline')).forEach((el, k) => {
-				el.classList.remove("display-none");
-			})
-	
-	}, 700)
-
-	setTimeout(function(){ Array.from(document.querySelectorAll('.qf-team')).forEach((el, k) => {
-				el.classList.remove("display-none");
-			})
-	
-	}, 800)
-
-	setTimeout(function(){ Array.from(document.querySelectorAll('.sf-team')).forEach((el, k) => {
-				el.classList.remove("display-none");
-			})
-	
-	}, 900)
-
-	setTimeout(function(){ Array.from(document.querySelectorAll('.gv-finalist')).forEach((el, k) => {
-				el.classList.remove("display-none");
-			})
-	
-	}, 1000)
-
-
-}
 
 
 function assignStrength(k){
