@@ -280,7 +280,7 @@ function rankGroups(newGroups){
 					        group.teamsOrdered = orderedGroup;
 				      }
 				      group.teams = orderedGroup;
-				      group.teams  = group.teams.slice().sort(function(a,b){ return a.drawPot-b.drawPot });
+				      group.teams  = group.teams.slice().sort(function(a,b){ return a.group_slot-b.group_slot });
 
 
 				
